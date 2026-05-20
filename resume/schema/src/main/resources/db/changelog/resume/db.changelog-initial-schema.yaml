@@ -1,0 +1,12 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20260521-resume-initial-schema
+      author: hrfilter
+      changes:
+        - sqlFile:
+            dbms: postgresql
+            encoding: UTF-8
+            endDelimiter: ";"
+            path: db/changelog/resume/initial_schema.sql
+            splitStatements: true
+            stripComments: false

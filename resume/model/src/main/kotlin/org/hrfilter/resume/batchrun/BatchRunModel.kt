@@ -1,0 +1,20 @@
+package org.hrfilter.resume.batchrun
+
+import org.hrfilter.resume.AuditProps
+import java.time.Instant
+
+interface BatchRunProps {
+    val status: BatchRunStatus
+    val evaluatedCount: Int
+    val passedCount: Int
+    val holdCount: Int
+    val rejectedCount: Int
+    val failedCount: Int
+    val startedAt: Instant
+    val completedAt: Instant?
+}
+
+interface BatchRunModel :
+    BatchRunIdentity,
+    BatchRunProps,
+    AuditProps

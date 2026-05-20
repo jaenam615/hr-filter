@@ -1,0 +1,61 @@
+[versions]
+kotlin = "2.1.21"
+kotlinx-coroutine = "1.9.0"
+
+# Spring & build
+spring-boot = "3.4.1"
+build-recipe = "1.1.1"
+ktlint = "12.1.1"
+detekt = "1.23.7"
+
+# Adapters
+exposed = "0.57.0"
+postgres = "42.7.4"
+hikari = "6.2.1"
+liquibase = "4.30.0"
+tika = "3.0.0"
+aws-sdk-kotlin = "1.3.91"
+okhttp = "4.12.0"
+jackson = "2.18.2"
+jakarta-mail = "2.1.3"
+angus-mail = "2.0.3"
+
+[plugins]
+build-recipe = { id = "com.linecorp.build-recipe-plugin", version.ref = "build-recipe" }
+spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kotlin-spring = { id = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotlin" }
+
+[libraries]
+kotlin-bom = { group = "org.jetbrains.kotlin", name = "kotlin-bom", version.ref = "kotlin" }
+kotlinx-coroutine-bom = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-bom", version.ref = "kotlinx-coroutine" }
+
+# Exposed
+exposed-core = { group = "org.jetbrains.exposed", name = "exposed-core", version.ref = "exposed" }
+exposed-dao = { group = "org.jetbrains.exposed", name = "exposed-dao", version.ref = "exposed" }
+exposed-jdbc = { group = "org.jetbrains.exposed", name = "exposed-jdbc", version.ref = "exposed" }
+exposed-java-time = { group = "org.jetbrains.exposed", name = "exposed-java-time", version.ref = "exposed" }
+exposed-spring-boot-starter = { group = "org.jetbrains.exposed", name = "exposed-spring-boot-starter", version.ref = "exposed" }
+
+# Persistence support
+postgres = { group = "org.postgresql", name = "postgresql", version.ref = "postgres" }
+hikari = { group = "com.zaxxer", name = "HikariCP", version.ref = "hikari" }
+liquibase-core = { group = "org.liquibase", name = "liquibase-core", version.ref = "liquibase" }
+
+# Parsing
+tika-core = { group = "org.apache.tika", name = "tika-core", version.ref = "tika" }
+tika-parsers-standard = { group = "org.apache.tika", name = "tika-parsers-standard-package", version.ref = "tika" }
+
+# AWS S3 (Kotlin native, coroutine 지원)
+aws-s3 = { group = "aws.sdk.kotlin", name = "s3", version.ref = "aws-sdk-kotlin" }
+
+# HTTP + JSON
+okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
+jackson-module-kotlin = { group = "com.fasterxml.jackson.module", name = "jackson-module-kotlin", version.ref = "jackson" }
+
+# Email
+jakarta-mail-api = { group = "jakarta.mail", name = "jakarta.mail-api", version.ref = "jakarta-mail" }
+angus-mail = { group = "org.eclipse.angus", name = "angus-mail", version.ref = "angus-mail" }
