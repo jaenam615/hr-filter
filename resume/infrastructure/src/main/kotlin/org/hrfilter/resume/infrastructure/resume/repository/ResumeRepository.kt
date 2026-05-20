@@ -19,6 +19,6 @@ interface ResumeRepository {
 
     fun updateStatus(
         resumeIdentity: ResumeIdentity,
-        status: Resume,
+        status: ResumeStatus,
     ): Resume
 }

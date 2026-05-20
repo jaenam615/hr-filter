@@ -1,1 +1,2 @@
 org.hrfilter.resume.jobposting.JobPostingAutoConfiguration
+org.hrfilter.resume.resume.ResumeAutoConfiguration

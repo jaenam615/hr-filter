@@ -7,8 +7,8 @@ import org.springframework.context.annotation.Bean
 @AutoConfiguration
 class JobPostingAutoConfiguration {
     @Bean
-    fun jobPostingLookUpServiceImpl(jobPostingRepository: JobPostingRepository): JobPostingService =
-        JobPostingServiceImpl(
+    fun jobPostingReaderServiceImpl(jobPostingRepository: JobPostingRepository): JobPostingReaderService =
+        JobPostingReaderServiceImpl(
             jobPostingRepository = jobPostingRepository,
         )
 }
