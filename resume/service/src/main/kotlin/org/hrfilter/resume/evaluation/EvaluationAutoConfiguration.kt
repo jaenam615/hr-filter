@@ -1,6 +1,6 @@
 package org.hrfilter.resume.evaluation
 
-import org.hrfilter.resume.infrastructure.evaluation.repository.EvaluationResultRepository
+import org.hrfilter.resume.evaluation.repository.EvaluationResultRepository
 import org.springframework.boot.autoconfigure.AutoConfiguration
 import org.springframework.context.annotation.Bean
 

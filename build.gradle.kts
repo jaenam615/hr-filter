@@ -137,6 +137,7 @@ configureByTypeHaving("boot", "exposed", "repository") {
         api(rootProject.libs.exposed.dao)
         api(rootProject.libs.exposed.jdbc)
         api(rootProject.libs.exposed.java.time)
+        api(rootProject.libs.exposed.json)
 
         implementation("org.springframework.boot:spring-boot-starter-jdbc")
         runtimeOnly(rootProject.libs.postgres)

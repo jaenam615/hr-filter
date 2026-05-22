@@ -1,7 +1,7 @@
 package org.hrfilter.resume.jobposting
 
 import org.hrfilter.resume.exception.JobPostingNotFoundException
-import org.hrfilter.resume.infrastructure.jobposting.repository.JobPostingRepository
+import org.hrfilter.resume.jobposting.repository.JobPostingRepository
 
 interface JobPostingReaderService {
     fun get(jobPostingIdentity: JobPostingIdentity): JobPosting

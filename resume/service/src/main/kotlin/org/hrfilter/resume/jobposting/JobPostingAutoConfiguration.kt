@@ -1,6 +1,6 @@
 package org.hrfilter.resume.jobposting
 
-import org.hrfilter.resume.infrastructure.jobposting.repository.JobPostingRepository
+import org.hrfilter.resume.jobposting.repository.JobPostingRepository
 import org.springframework.boot.autoconfigure.AutoConfiguration
 import org.springframework.context.annotation.Bean
 

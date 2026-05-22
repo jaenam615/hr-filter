@@ -1,13 +1,13 @@
 package org.hrfilter.resume.batch
 
-import org.hrfilter.resume.infrastructure.batchrun.repository.BatchRunRepository
-import org.hrfilter.resume.infrastructure.evaluation.repository.EvaluationResultRepository
-import org.hrfilter.resume.infrastructure.jobposting.repository.JobPostingRepository
-import org.hrfilter.resume.infrastructure.llm.LlmEvaluator
-import org.hrfilter.resume.infrastructure.notifier.Notifier
-import org.hrfilter.resume.infrastructure.parser.ResumeParser
-import org.hrfilter.resume.infrastructure.resume.repository.ResumeRepository
-import org.hrfilter.resume.infrastructure.storage.ResumeStorage
+import org.hrfilter.resume.batchrun.repository.BatchRunRepository
+import org.hrfilter.resume.evaluation.repository.EvaluationResultRepository
+import org.hrfilter.resume.jobposting.repository.JobPostingRepository
+import org.hrfilter.resume.llm.LlmEvaluator
+import org.hrfilter.resume.notifier.Notifier
+import org.hrfilter.resume.parser.ResumeParser
+import org.hrfilter.resume.resume.repository.ResumeRepository
+import org.hrfilter.resume.storage.ResumeStorage
 import org.springframework.boot.autoconfigure.AutoConfiguration
 import org.springframework.context.annotation.Bean
 

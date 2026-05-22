@@ -1,7 +1,7 @@
 package org.hrfilter.resume.resume
 
-import org.hrfilter.resume.infrastructure.resume.repository.ResumeRepository
-import org.hrfilter.resume.infrastructure.storage.ResumeStorage
+import org.hrfilter.resume.resume.repository.ResumeRepository
+import org.hrfilter.resume.storage.ResumeStorage
 import org.springframework.boot.autoconfigure.AutoConfiguration
 import org.springframework.context.annotation.Bean
 

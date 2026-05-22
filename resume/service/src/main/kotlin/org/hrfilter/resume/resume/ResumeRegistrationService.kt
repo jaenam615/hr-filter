@@ -1,8 +1,8 @@
 package org.hrfilter.resume.resume
 
-import org.hrfilter.resume.infrastructure.resume.repository.ResumeRepository
-import org.hrfilter.resume.infrastructure.storage.ResumeStorage
-import org.hrfilter.resume.infrastructure.storage.ResumeUploadRequest
+import org.hrfilter.resume.resume.repository.ResumeRepository
+import org.hrfilter.resume.storage.ResumeStorage
+import org.hrfilter.resume.storage.ResumeUploadRequest
 import org.hrfilter.resume.jobposting.JobPostingIdentity
 import java.time.Instant
 import java.util.UUID

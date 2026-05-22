@@ -1,7 +1,7 @@
 package org.hrfilter.resume.resume
 
 import org.hrfilter.resume.exception.ResumeNotFoundException
-import org.hrfilter.resume.infrastructure.resume.repository.ResumeRepository
+import org.hrfilter.resume.resume.repository.ResumeRepository
 
 interface ResumeReaderService {
     fun get(resumeIdentity: ResumeIdentity): Resume

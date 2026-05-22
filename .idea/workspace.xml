@@ -6,9 +6,26 @@
   <component name="ChangeListManager">
     <list default="true" id="2414d660-3c34-4328-81c7-9cf5fc98c0f3" name="Changes" comment="feat: finish services">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resume/infrastructure/src/main/kotlin/org/hrfilter/resume/infrastructure/parser/ResumeParser.kt" beforeDir="false" afterPath="$PROJECT_DIR$/resume/infrastructure/src/main/kotlin/org/hrfilter/resume/infrastructure/parser/ResumeParser.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/libs.versions.toml" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/libs.versions.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resume/infrastructure/src/main/kotlin/org/hrfilter/resume/infrastructure/batchrun/repository/BatchRunRepository.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resume/infrastructure/src/main/kotlin/org/hrfilter/resume/infrastructure/evaluation/repository/EvaluationResultRepository.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resume/infrastructure/src/main/kotlin/org/hrfilter/resume/infrastructure/jobposting/repository/JobPostingRepository.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resume/infrastructure/src/main/kotlin/org/hrfilter/resume/infrastructure/llm/LlmEvaluator.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resume/infrastructure/src/main/kotlin/org/hrfilter/resume/infrastructure/notifier/Notifier.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resume/infrastructure/src/main/kotlin/org/hrfilter/resume/infrastructure/parser/ResumeParser.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resume/infrastructure/src/main/kotlin/org/hrfilter/resume/infrastructure/resume/repository/ResumeRepository.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resume/infrastructure/src/main/kotlin/org/hrfilter/resume/infrastructure/storage/ResumeStorage.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resume/service/src/main/kotlin/org/hrfilter/resume/batch/BatchAutoConfiguration.kt" beforeDir="false" afterPath="$PROJECT_DIR$/resume/service/src/main/kotlin/org/hrfilter/resume/batch/BatchAutoConfiguration.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resume/service/src/main/kotlin/org/hrfilter/resume/batch/BatchEvaluationService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/resume/service/src/main/kotlin/org/hrfilter/resume/batch/BatchEvaluationService.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resume/service/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports" beforeDir="false" afterPath="$PROJECT_DIR$/resume/service/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resume/service/src/main/kotlin/org/hrfilter/resume/evaluation/EvaluationAutoConfiguration.kt" beforeDir="false" afterPath="$PROJECT_DIR$/resume/service/src/main/kotlin/org/hrfilter/resume/evaluation/EvaluationAutoConfiguration.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resume/service/src/main/kotlin/org/hrfilter/resume/evaluation/EvaluationReaderService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/resume/service/src/main/kotlin/org/hrfilter/resume/evaluation/EvaluationReaderService.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resume/service/src/main/kotlin/org/hrfilter/resume/jobposting/JobPostingAutoConfiguration.kt" beforeDir="false" afterPath="$PROJECT_DIR$/resume/service/src/main/kotlin/org/hrfilter/resume/jobposting/JobPostingAutoConfiguration.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resume/service/src/main/kotlin/org/hrfilter/resume/jobposting/JobPostingReaderService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/resume/service/src/main/kotlin/org/hrfilter/resume/jobposting/JobPostingReaderService.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resume/service/src/main/kotlin/org/hrfilter/resume/resume/ResumeAutoConfiguration.kt" beforeDir="false" afterPath="$PROJECT_DIR$/resume/service/src/main/kotlin/org/hrfilter/resume/resume/ResumeAutoConfiguration.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resume/service/src/main/kotlin/org/hrfilter/resume/resume/ResumeReaderService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/resume/service/src/main/kotlin/org/hrfilter/resume/resume/ResumeReaderService.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resume/service/src/main/kotlin/org/hrfilter/resume/resume/ResumeRegistrationService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/resume/service/src/main/kotlin/org/hrfilter/resume/resume/ResumeRegistrationService.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle.kts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,8 +57,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Kotlin Class" />
         <option value="Kotlin Interface" />
+        <option value="Kotlin Class" />
       </list>
     </option>
   </component>
@@ -64,6 +81,9 @@
   <component name="KubernetesApiProvider"><![CDATA[{
   "isMigrated": true
 }]]></component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectColorInfo"><![CDATA[{
   "associatedIndex": 4
 }]]></component>
@@ -114,7 +134,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1779293531322</updated>
-      <workItem from="1779293532655" duration="20348000" />
+      <workItem from="1779293532655" duration="22671000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <option name="closed" value="true" />
@@ -148,7 +168,15 @@
       <option name="project" value="LOCAL" />
       <updated>1779384197178</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="feat: finish services">
+      <option name="closed" value="true" />
+      <created>1779474182177</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1779474182177</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

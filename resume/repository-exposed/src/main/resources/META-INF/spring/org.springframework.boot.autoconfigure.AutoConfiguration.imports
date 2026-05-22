@@ -1,0 +1,4 @@
+org.hrfilter.resume.jobposting.repository.JobPostingRepositoryAutoConfiguration
+org.hrfilter.resume.resume.repository.ResumeRepositoryAutoConfiguration
+org.hrfilter.resume.batchrun.repository.BatchRunRepositoryAutoConfiguration
+org.hrfilter.resume.evaluation.repository.EvaluationResultRepositoryAutoConfiguration
