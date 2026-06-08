@@ -36,7 +36,3 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-
-include("resume:untitled")
-
-include("resume:service")

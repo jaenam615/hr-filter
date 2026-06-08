@@ -4,28 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2414d660-3c34-4328-81c7-9cf5fc98c0f3" name="Changes" comment="feat: finish services">
+    <list default="true" id="2414d660-3c34-4328-81c7-9cf5fc98c0f3" name="Changes" comment="feat: exposed repositories">
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/libs.versions.toml" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/libs.versions.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resume/infrastructure/src/main/kotlin/org/hrfilter/resume/infrastructure/batchrun/repository/BatchRunRepository.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resume/infrastructure/src/main/kotlin/org/hrfilter/resume/infrastructure/evaluation/repository/EvaluationResultRepository.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resume/infrastructure/src/main/kotlin/org/hrfilter/resume/infrastructure/jobposting/repository/JobPostingRepository.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resume/infrastructure/src/main/kotlin/org/hrfilter/resume/infrastructure/llm/LlmEvaluator.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resume/infrastructure/src/main/kotlin/org/hrfilter/resume/infrastructure/notifier/Notifier.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resume/infrastructure/src/main/kotlin/org/hrfilter/resume/infrastructure/parser/ResumeParser.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resume/infrastructure/src/main/kotlin/org/hrfilter/resume/infrastructure/resume/repository/ResumeRepository.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resume/infrastructure/src/main/kotlin/org/hrfilter/resume/infrastructure/storage/ResumeStorage.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resume/service/src/main/kotlin/org/hrfilter/resume/batch/BatchAutoConfiguration.kt" beforeDir="false" afterPath="$PROJECT_DIR$/resume/service/src/main/kotlin/org/hrfilter/resume/batch/BatchAutoConfiguration.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resume/service/src/main/kotlin/org/hrfilter/resume/batch/BatchEvaluationService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/resume/service/src/main/kotlin/org/hrfilter/resume/batch/BatchEvaluationService.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resume/service/src/main/kotlin/org/hrfilter/resume/evaluation/EvaluationAutoConfiguration.kt" beforeDir="false" afterPath="$PROJECT_DIR$/resume/service/src/main/kotlin/org/hrfilter/resume/evaluation/EvaluationAutoConfiguration.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resume/service/src/main/kotlin/org/hrfilter/resume/evaluation/EvaluationReaderService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/resume/service/src/main/kotlin/org/hrfilter/resume/evaluation/EvaluationReaderService.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resume/service/src/main/kotlin/org/hrfilter/resume/jobposting/JobPostingAutoConfiguration.kt" beforeDir="false" afterPath="$PROJECT_DIR$/resume/service/src/main/kotlin/org/hrfilter/resume/jobposting/JobPostingAutoConfiguration.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resume/service/src/main/kotlin/org/hrfilter/resume/jobposting/JobPostingReaderService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/resume/service/src/main/kotlin/org/hrfilter/resume/jobposting/JobPostingReaderService.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resume/service/src/main/kotlin/org/hrfilter/resume/resume/ResumeAutoConfiguration.kt" beforeDir="false" afterPath="$PROJECT_DIR$/resume/service/src/main/kotlin/org/hrfilter/resume/resume/ResumeAutoConfiguration.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resume/service/src/main/kotlin/org/hrfilter/resume/resume/ResumeReaderService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/resume/service/src/main/kotlin/org/hrfilter/resume/resume/ResumeReaderService.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resume/service/src/main/kotlin/org/hrfilter/resume/resume/ResumeRegistrationService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/resume/service/src/main/kotlin/org/hrfilter/resume/resume/ResumeRegistrationService.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle.kts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,28 +46,38 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "jaenam615"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;jaenam615&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/jaenam615/hr-filter.git",
-    "accountId": "58dad6af-99dc-484d-980b-817f021c7e54"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/jaenam615/hr-filter.git&quot;,
+    &quot;accountId&quot;: &quot;58dad6af-99dc-484d-980b-817f021c7e54&quot;
   }
-}]]></component>
-  <component name="KubernetesApiPersistence"><![CDATA[{}]]></component>
-  <component name="KubernetesApiProvider"><![CDATA[{
-  "isMigrated": true
-}]]></component>
+}</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="jrt://$APPLICATION_HOME_DIR$/jbr/Contents/Home!/java.base/java/time/Instant.class" root0="SKIP_INSPECTION" />
+    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.exposed/exposed-core/0.57.0/893f530af169b6bc2c1d5356c88835694a33cdd6/exposed-core-0.57.0-sources.jar!/org/jetbrains/exposed/dao/id/EntityID.kt" root0="SKIP_INSPECTION" />
+    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.exposed/exposed-core/0.57.0/893f530af169b6bc2c1d5356c88835694a33cdd6/exposed-core-0.57.0-sources.jar!/org/jetbrains/exposed/sql/Queries.kt" root0="SKIP_INSPECTION" />
+    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.exposed/exposed-core/0.57.0/f2df6d6f2b021ac1bacff9ff69a4cd02afa4f847/exposed-core-0.57.0.jar!/org/jetbrains/exposed/sql/QueriesKt.class" root0="SKIP_INSPECTION" />
+    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/2.1.21/5922d504d55f1f6172e7cea51b02fad38e65b094/kotlin-stdlib-2.1.21-sources.jar!/commonMain/kotlin/collections/Maps.kt" root0="SKIP_INSPECTION" />
+  </component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 4
-}]]></component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="2" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
   <component name="ProjectId" id="3DzmyZudG0Ueilr9SpMzPeGPs7y" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="1" id="Add" />
@@ -97,9 +88,11 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Gradle.Download Sources.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
+    "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "master",
     "last_opened_file_path": "/Users/jaeheenam/Dev/personal/hr-filter/hr-filter/resume/service",
     "node.js.detected.package.eslint": "true",
@@ -134,7 +127,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1779293531322</updated>
-      <workItem from="1779293532655" duration="22671000" />
+      <workItem from="1779293532655" duration="26934000" />
+      <workItem from="1779817867127" duration="690000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <option name="closed" value="true" />
@@ -176,7 +170,15 @@
       <option name="project" value="LOCAL" />
       <updated>1779474182177</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="feat: exposed repositories">
+      <option name="closed" value="true" />
+      <created>1779476765777</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1779476765777</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -188,7 +190,8 @@
     <MESSAGE value="feat: evaluation reader service &amp; start batch service" />
     <MESSAGE value="feat: mid evaluation service" />
     <MESSAGE value="feat: finish services" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: finish services" />
+    <MESSAGE value="feat: exposed repositories" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: exposed repositories" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
