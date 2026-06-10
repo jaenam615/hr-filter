@@ -1,0 +1,2 @@
+org.hrfilter.resume.api.resume.ResumeApiAutoConfiguration
+org.hrfilter.resume.api.batchrun.BatchRunApiAutoConfiguration

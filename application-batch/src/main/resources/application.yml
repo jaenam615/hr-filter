@@ -1,0 +1,47 @@
+spring:
+  application:
+    name: hr-filter-batch
+  main:
+    web-application-type: none
+  datasource:
+    url: jdbc:tc:postgresql:15:///hrfilter?TC_REUSABLE=true
+    username: test
+    password: test
+  liquibase:
+    change-log: classpath:/db/changelog/db.changelog-master.yaml
+
+hrfilter:
+  batch:
+    cron: "0 0 8,14 * * *"
+
+management:
+  server:
+    port: 12347
+  endpoints:
+    web:
+      exposure:
+        include:
+          - health
+          - prometheus
+          - loggers
+  endpoint:
+    health:
+      probes:
+        enabled: true
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local-dev
+
+hrfilter:
+  batch:
+    # local: 매 1분마다 (테스트용)
+    cron: "0 * * * * *"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
