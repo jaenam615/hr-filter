@@ -80,8 +80,39 @@
 
 ---
 
-## 다음 (TODO.md 기준)
+## 2026-06-11 — bootRun 첫 성공 + 어댑터 4종 실제 로직
 
-1. 🅱️ **`./gradlew :application-api:bootRun` 첫 성공** — Docker 데몬 필요 (Testcontainers Postgres). Liquibase 마이그레이션 + Swagger UI `http://localhost:8080/swagger-ui.html` 확인이 첫 진짜 마일스톤
-2. 🅲️ **어댑터 실제 로직 채우기** — 추천 순서: Tika (가장 단순) → Slack (ROI 높음, 배치 알림 즉시 확인) → S3 (coroutine) → Anthropic Batches (가장 복잡)
-3. 통합 테스트 (`./gradlew check` — Testcontainers 사용)
+### 로컬 스택 전환 (Testcontainers → docker-compose)
+- `docker-compose.yml` — Postgres 15 + MinIO(S3 호환) + minio-init(버킷 자동 생성). 헬스체크 포함
+- 두 진입점 `application.yml`을 Testcontainers JDBC URL → 실제 docker-compose 접속으로 변경. `application-*/build.gradle.kts`에서 testcontainers deps 제거
+- **삽질**: bootRun이 `UnsupportedClassVersionError` (class 65.0 vs 61.0) — toolchain 미선언이라 Gradle 데몬이 잡은 JVM(homebrew openjdk@17)으로 fork. 캐시 클래스는 21로 컴파일됨 → 충돌
+  - 해결: 루트 `build.gradle.kts`의 `JavaPluginExtension`에 `toolchain { languageVersion = 21 }` 추가 → 컴파일·실행 JVM 통일
+  - `~/.zshrc`에 `jdk()` 버전 스위처 함수 추가 (수동 전환용, 기본 JDK는 그대로 17)
+
+### 🅱️ bootRun 첫 성공 (마일스톤)
+- `./gradlew :application-api:bootRun` → Liquibase 마이그레이션 정상, Tomcat 8080, 1.3초 기동
+- `/actuator/health` UP, `/swagger-ui/index.html` 200, `/v3/api-docs` 200 확인
+
+### 🅲️ 어댑터 실제 로직 (4종 전부 `TODO()` 제거)
+- **Tika** (`TikaResumeParser`) — `AutoDetectParser` + `BodyContentHandler(-1)`(100KB 쓰기 제한 해제) + `Content-Type` 힌트. **빌드 픽스**: `tika-parsers-standard-package`는 파서 구현체만, 코어 API(`AutoDetectParser`/`BodyContentHandler`/`Metadata`)는 `tika-core`에 → `libs.tika.core` 의존성 추가
+- **Slack/Teams** — okhttp 웹훅 POST. Slack은 `{text}`, Teams는 MessageCard. 메시지 본문은 `BatchSummary.toMessageText()` 공통 함수
+- **Email** — jakarta.mail SMTP (`MimeMessage` + STARTTLS + `Authenticator`)
+- **Anthropic** (`AnthropicLlmEvaluator`) — Message Batches API 직접 HTTP 호출 (SDK 미사용, 프로젝트 컨벤션대로 okhttp+jackson)
+  - `submitBatch`: `POST /v1/messages/batches`, 요청마다 `output_config.format`(json_schema)로 평가 JSON 구조 강제 (verdict/score/breakdown/reasoning)
+  - `pollResults`: `GET .../{id}` → `processing_status`(in_progress/ended/canceling) 매핑 → ended면 `GET .../{id}/results` JSONL 파싱
+  - 모델 `claude-opus-4-8`, `custom_id="resume-{id}"`로 결과↔이력서 매핑
+- **신규 패턴**: 어댑터 설정을 `@ConfigurationProperties` + `@EnableConfigurationProperties`로 바인딩 (NotifierProperties/S3StorageProperties/AnthropicLlmProperties). 프로젝트 첫 도입
+  - **삽질**: notifier/llm에서 `ObjectMapper`를 `@Bean`으로 노출 → Spring MVC가 단일 ObjectMapper 기대하는데 2개 발견되어 부팅 실패. okhttp client/ObjectMapper는 어댑터 내부 `private`로 강등
+
+### 검증
+- **S3 end-to-end (MinIO)**: job_posting 시드 → `POST /api/v1/resumes` 멀티파트 업로드 → MinIO 버킷에 객체 생성 확인(92B), `object_key` DB 저장, `GET` 조회까지 통과
+- Tika는 컴파일+API 정합성만 (실파일 파싱은 배치에서). Slack/Teams/Email/Anthropic은 컴파일+빈 와이어링 확인 (웹훅 URL/API 키 없어 실호출 미검증)
+- `compileKotlin` 전체 통과, 어댑터 4종 `ktlintCheck` 통과
+
+---
+
+## 다음
+
+1. **통합 테스트** — `kotlin` 타입의 integrationTest 스위트 활용. S3는 MinIO Testcontainer로 실검증 가능. Anthropic은 mock 웹서버(okhttp MockWebServer)로 batches 흐름 검증 권장 (실 API는 키+최대 24h 소요라 CI 부적합)
+2. **배치 실행 경로 검증** — `application-batch` bootRun + `ANTHROPIC_API_KEY` 세팅 후 소량 이력서로 `evaluate()` 1회 실제 돌려보기. local-dev 프로필 cron 매분
+3. **운영 보강** — Bean Validation provider 추가(DTO 검증 활성화), Slack 웹훅 URL 등 시크릿 주입 경로 정리(env → 배포 시 secret store)
