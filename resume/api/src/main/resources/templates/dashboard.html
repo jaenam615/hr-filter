@@ -23,10 +23,35 @@
 <body>
 <h1>hr-filter 대시보드</h1>
 
+<h2>채용 공고</h2>
+<form th:action="@{/dashboard/job-postings}" method="post">
+    <label for="title">제목</label>
+    <input type="text" id="title" name="title" required/>
+    <label for="description">설명</label>
+    <input type="text" id="description" name="description" required/>
+    <label for="requirements">요구사항</label>
+    <input type="text" id="requirements" name="requirements" required/>
+    <button type="submit">공고 등록</button>
+</form>
+<p th:if="${jobPostings.isEmpty()}" class="muted">등록된 공고가 없습니다.</p>
+<table th:unless="${jobPostings.isEmpty()}">
+    <thead><tr><th>ID</th><th>제목</th><th>요구사항</th></tr></thead>
+    <tbody>
+    <tr th:each="jp : ${jobPostings}">
+        <td th:text="${jp.jobPostingId}"></td>
+        <td th:text="${jp.title}"></td>
+        <td th:text="${jp.requirements}"></td>
+    </tr>
+    </tbody>
+</table>
+
 <h2>이력서 업로드</h2>
 <form th:action="@{/dashboard/resumes}" method="post" enctype="multipart/form-data">
-    <label for="jobPostingId">채용공고 ID</label>
-    <input type="number" id="jobPostingId" name="jobPostingId" value="1" required/>
+    <label for="jobPostingId">채용 공고</label>
+    <select id="jobPostingId" name="jobPostingId" required>
+        <option th:each="jp : ${jobPostings}" th:value="${jp.jobPostingId}"
+                th:text="'#' + ${jp.jobPostingId} + ' ' + ${jp.title}"></option>
+    </select>
     <label for="applicantName">지원자 이름</label>
     <input type="text" id="applicantName" name="applicantName" required/>
     <label for="applicantEmail">지원자 이메일</label>

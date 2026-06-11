@@ -13,41 +13,41 @@ import org.jetbrains.exposed.sql.transactions.transaction
 internal class EvaluationResultExposedRepository : EvaluationResultRepository {
     override fun save(evaluationResult: EvaluationResult): EvaluationResult =
         transaction {
-            val newId = EvaluationResultTable.insertAndGetId {
-                it[resumeId] = evaluationResult.resumeId
-                it[batchRunId] = evaluationResult.batchRunId
-                it[verdict] = evaluationResult.verdict
-                it[score] = evaluationResult.score
-                it[breakdown] = evaluationResult.breakdown
-                it[reasoning] = evaluationResult.reasoning
-                it[evaluatedAt] = evaluationResult.evaluatedAt
-                it[createdAt] = evaluationResult.createdAt
-                it[updatedAt] = evaluationResult.updatedAt
-            }
+            val newId =
+                EvaluationResultTable.insertAndGetId {
+                    it[resumeId] = evaluationResult.resumeId
+                    it[batchRunId] = evaluationResult.batchRunId
+                    it[verdict] = evaluationResult.verdict
+                    it[score] = evaluationResult.score
+                    it[breakdown] = evaluationResult.breakdown
+                    it[reasoning] = evaluationResult.reasoning
+                    it[evaluatedAt] = evaluationResult.evaluatedAt
+                    it[createdAt] = evaluationResult.createdAt
+                    it[updatedAt] = evaluationResult.updatedAt
+                }
             evaluationResult.copy(evaluationResultId = newId.value)
         }
 
     override fun saveAll(evaluationResults: List<EvaluationResult>): List<EvaluationResult> =
         transaction {
-            val rows = EvaluationResultTable.batchInsert(evaluationResults) { item ->
-                this[EvaluationResultTable.resumeId] = item.resumeId
-                this[EvaluationResultTable.batchRunId] = item.batchRunId
-                this[EvaluationResultTable.verdict] = item.verdict
-                this[EvaluationResultTable.score] = item.score
-                this[EvaluationResultTable.breakdown] = item.breakdown
-                this[EvaluationResultTable.reasoning] = item.reasoning
-                this[EvaluationResultTable.evaluatedAt] = item.evaluatedAt
-                this[EvaluationResultTable.createdAt] = item.createdAt
-                this[EvaluationResultTable.updatedAt] = item.updatedAt
-            }
+            val rows =
+                EvaluationResultTable.batchInsert(evaluationResults) { item ->
+                    this[EvaluationResultTable.resumeId] = item.resumeId
+                    this[EvaluationResultTable.batchRunId] = item.batchRunId
+                    this[EvaluationResultTable.verdict] = item.verdict
+                    this[EvaluationResultTable.score] = item.score
+                    this[EvaluationResultTable.breakdown] = item.breakdown
+                    this[EvaluationResultTable.reasoning] = item.reasoning
+                    this[EvaluationResultTable.evaluatedAt] = item.evaluatedAt
+                    this[EvaluationResultTable.createdAt] = item.createdAt
+                    this[EvaluationResultTable.updatedAt] = item.updatedAt
+                }
             evaluationResults.zip(rows) { result, row ->
                 result.copy(evaluationResultId = row[EvaluationResultTable.id].value)
             }
         }
 
-    override fun findByEvaluationResultIdentity(
-        evaluationResultIdentity: EvaluationResultIdentity,
-    ): EvaluationResult? =
+    override fun findByEvaluationResultIdentity(evaluationResultIdentity: EvaluationResultIdentity): EvaluationResult? =
         transaction {
             EvaluationResultTable
                 .selectAll()

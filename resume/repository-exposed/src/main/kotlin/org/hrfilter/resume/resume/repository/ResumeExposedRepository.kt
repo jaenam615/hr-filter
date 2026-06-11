@@ -13,16 +13,17 @@ import java.time.Instant
 internal class ResumeExposedRepository : ResumeRepository {
     override fun save(resume: Resume): Resume =
         transaction {
-            val newId = ResumeTable.insertAndGetId {
-                it[jobPostingId] = resume.jobPostingId
-                it[applicantName] = resume.applicantName
-                it[applicantEmail] = resume.applicantEmail
-                it[objectKey] = resume.objectKey
-                it[mimeType] = resume.mimeType
-                it[status] = resume.status
-                it[createdAt] = resume.createdAt
-                it[updatedAt] = resume.updatedAt
-            }
+            val newId =
+                ResumeTable.insertAndGetId {
+                    it[jobPostingId] = resume.jobPostingId
+                    it[applicantName] = resume.applicantName
+                    it[applicantEmail] = resume.applicantEmail
+                    it[objectKey] = resume.objectKey
+                    it[mimeType] = resume.mimeType
+                    it[status] = resume.status
+                    it[createdAt] = resume.createdAt
+                    it[updatedAt] = resume.updatedAt
+                }
             resume.copy(resumeId = newId.value)
         }
 

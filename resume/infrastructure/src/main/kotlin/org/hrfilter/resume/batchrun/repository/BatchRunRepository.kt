@@ -4,7 +4,6 @@ import org.hrfilter.resume.batchrun.BatchRun
 import org.hrfilter.resume.batchrun.BatchRunIdentity
 import org.hrfilter.resume.batchrun.BatchRunStatus
 import org.hrfilter.resume.evaluation.EvaluationVerdict
-import org.hrfilter.resume.resume.Resume
 import java.time.Instant
 
 interface BatchRunRepository {

@@ -5,6 +5,7 @@ import org.hrfilter.resume.evaluation.EvaluationVerdict
 
 interface LlmEvaluator {
     fun submitBatch(jobs: List<EvaluationJob>): BatchHandle
+
     fun pollResults(handle: BatchHandle): BatchResults
 }
 

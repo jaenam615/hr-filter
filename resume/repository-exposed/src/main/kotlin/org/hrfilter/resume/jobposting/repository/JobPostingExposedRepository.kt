@@ -3,10 +3,33 @@ package org.hrfilter.resume.jobposting.repository
 import org.hrfilter.resume.jobposting.JobPosting
 import org.hrfilter.resume.jobposting.JobPostingIdentity
 import org.jetbrains.exposed.sql.ResultRow
+import org.jetbrains.exposed.sql.SortOrder
+import org.jetbrains.exposed.sql.insertAndGetId
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
 
 internal class JobPostingExposedRepository : JobPostingRepository {
+    override fun save(jobPosting: JobPosting): JobPosting =
+        transaction {
+            val newId =
+                JobPostingTable.insertAndGetId {
+                    it[title] = jobPosting.title
+                    it[description] = jobPosting.description
+                    it[requirements] = jobPosting.requirements
+                    it[createdAt] = jobPosting.createdAt
+                    it[updatedAt] = jobPosting.updatedAt
+                }
+            jobPosting.copy(jobPostingId = newId.value)
+        }
+
+    override fun findAll(): List<JobPosting> =
+        transaction {
+            JobPostingTable
+                .selectAll()
+                .orderBy(JobPostingTable.id, SortOrder.DESC)
+                .map { it.toJobPosting() }
+        }
+
     override fun findByJobPostingIdentity(jobPostingIdentity: JobPostingIdentity): JobPosting? =
         transaction {
             JobPostingTable

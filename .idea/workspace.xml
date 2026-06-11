@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2414d660-3c34-4328-81c7-9cf5fc98c0f3" name="Changes" comment="feat: exposed repositories">
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="2414d660-3c34-4328-81c7-9cf5fc98c0f3" name="Changes" comment="chore: env example 추가">
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -86,31 +85,47 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Gradle.Download Sources.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "/Users/jaeheenam/Dev/personal/hr-filter/hr-filter/resume/service",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "reference.settingsdialog.project.grazie",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.Download Sources.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/jaeheenam/Dev/personal/hr-filter/hr-filter/resume/service&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.grazie&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/resume/service" />
     </key>
+  </component>
+  <component name="RunManager" selected="Spring Boot.HrFilterApiApplication">
+    <configuration name="HrFilterApiApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="hr-filter.application-api.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="org.hrfilter.application.api.HrFilterApiApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="HrFilterBatchApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="hr-filter.application-batch.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="org.hrfilter.application.batch.HrFilterBatchApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -129,6 +144,7 @@
       <updated>1779293531322</updated>
       <workItem from="1779293532655" duration="26934000" />
       <workItem from="1779817867127" duration="690000" />
+      <workItem from="1780917691895" duration="21896000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <option name="closed" value="true" />
@@ -178,7 +194,79 @@
       <option name="project" value="LOCAL" />
       <updated>1779476765777</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="feat: external adapter skeletons">
+      <option name="closed" value="true" />
+      <created>1780919890887</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1780919890887</updated>
+    </task>
+    <task id="LOCAL-00008" summary="feat: controllers &amp; api server entry point">
+      <option name="closed" value="true" />
+      <created>1781060341901</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1781060341901</updated>
+    </task>
+    <task id="LOCAL-00009" summary="docs: devlog">
+      <option name="closed" value="true" />
+      <created>1781133911669</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1781133911669</updated>
+    </task>
+    <task id="LOCAL-00010" summary="feat:local docker-compose stack">
+      <option name="closed" value="true" />
+      <created>1781140762760</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1781140762760</updated>
+    </task>
+    <task id="LOCAL-00011" summary="test: unit tests for batch and parsing">
+      <option name="closed" value="true" />
+      <created>1781142547759</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1781142547759</updated>
+    </task>
+    <task id="LOCAL-00012" summary="feat: dashboard &amp; dashboard api">
+      <option name="closed" value="true" />
+      <created>1781142953532</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1781142953532</updated>
+    </task>
+    <task id="LOCAL-00013" summary="docs: 설계 및 주요하게 생각한 과제 정리">
+      <option name="closed" value="true" />
+      <created>1781143376955</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1781143376955</updated>
+    </task>
+    <task id="LOCAL-00014" summary="docs: README - architecture, 개발 철학 등">
+      <option name="closed" value="true" />
+      <created>1781201245933</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1781201245933</updated>
+    </task>
+    <task id="LOCAL-00015" summary="chore: env example 추가">
+      <option name="closed" value="true" />
+      <created>1781201317022</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1781201317022</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -191,7 +279,16 @@
     <MESSAGE value="feat: mid evaluation service" />
     <MESSAGE value="feat: finish services" />
     <MESSAGE value="feat: exposed repositories" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: exposed repositories" />
+    <MESSAGE value="feat: external adapter skeletons" />
+    <MESSAGE value="feat: controllers &amp; api server entry point" />
+    <MESSAGE value="docs: devlog" />
+    <MESSAGE value="feat:local docker-compose stack" />
+    <MESSAGE value="test: unit tests for batch and parsing" />
+    <MESSAGE value="feat: dashboard &amp; dashboard api" />
+    <MESSAGE value="docs: 설계 및 주요하게 생각한 과제 정리" />
+    <MESSAGE value="docs: README - architecture, 개발 철학 등" />
+    <MESSAGE value="chore: env example 추가" />
+    <option name="LAST_COMMIT_MESSAGE" value="chore: env example 추가" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

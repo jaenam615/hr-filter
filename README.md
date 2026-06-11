@@ -227,7 +227,7 @@ application-batch       # 배치 서버 진입점
 
 ---
 
-## 현재 상태 / 로드맵
+## 로드맵
 
 검증된 것 ✅ — API 기동 · 이력서 업로드 → MinIO · 대시보드 · 어댑터 와이어링 · 배치 오케스트레이션 로직 · 단위 테스트.
 
@@ -241,3 +241,8 @@ application-batch       # 배치 서버 진입점
 - [ ] 통합 테스트, 관측성(메트릭/구조화 로깅)
 
 자세한 설계 배경은 [`docs/technical-challenges.md`](docs/technical-challenges.md), 진행 기록은 [`docs/devlog.md`](docs/devlog.md).
+
+## 테스트 결과
+
+- webhook 테스트
+![img.png](test-images/img.png)

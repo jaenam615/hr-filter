@@ -18,11 +18,12 @@ internal object EvaluationResultTable :
     val batchRunId = reference("batch_run_id", BatchRunTable)
     val verdict = enumerationByName("verdict", 20, EvaluationVerdict::class)
     val score = integer("score")
-    val breakdown = jsonb<EvaluationBreakdown>(
-        name = "breakdown",
-        serialize = { objectMapper.writeValueAsString(it) },
-        deserialize = { objectMapper.readValue(it) },
-    )
+    val breakdown =
+        jsonb<EvaluationBreakdown>(
+            name = "breakdown",
+            serialize = { objectMapper.writeValueAsString(it) },
+            deserialize = { objectMapper.readValue(it) },
+        )
     val reasoning = text("reasoning")
     val evaluatedAt = timestamp("evaluated_at")
     val createdAt = timestamp("created_at")

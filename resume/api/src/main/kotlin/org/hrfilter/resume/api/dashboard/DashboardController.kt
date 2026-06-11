@@ -5,6 +5,9 @@ import org.hrfilter.resume.batchrun.BatchRunReaderService
 import org.hrfilter.resume.batchrun.of
 import org.hrfilter.resume.evaluation.EvaluationReaderService
 import org.hrfilter.resume.jobposting.JobPostingIdentity
+import org.hrfilter.resume.jobposting.JobPostingReaderService
+import org.hrfilter.resume.jobposting.JobPostingRegistrationCommand
+import org.hrfilter.resume.jobposting.JobPostingRegistrationService
 import org.hrfilter.resume.jobposting.of
 import org.hrfilter.resume.resume.ResumeIdentity
 import org.hrfilter.resume.resume.ResumeReaderService
@@ -28,6 +31,8 @@ class DashboardController(
     private val evaluationReaderService: EvaluationReaderService,
     private val resumeReaderService: ResumeReaderService,
     private val resumeRegistrationService: ResumeRegistrationService,
+    private val jobPostingReaderService: JobPostingReaderService,
+    private val jobPostingRegistrationService: JobPostingRegistrationService,
 ) {
     @GetMapping
     fun dashboard(model: Model): String {
@@ -53,10 +58,28 @@ class DashboardController(
                         }
                 }.orEmpty()
 
+        model.addAttribute("jobPostings", jobPostingReaderService.getAll())
         model.addAttribute("batchRuns", batchRuns)
         model.addAttribute("latestRun", latestRun)
         model.addAttribute("rows", rows)
         return "dashboard"
+    }
+
+    @PostMapping("/job-postings")
+    fun createJobPosting(
+        @RequestParam("title") title: String,
+        @RequestParam("description") description: String,
+        @RequestParam("requirements") requirements: String,
+    ): String {
+        jobPostingRegistrationService.register(
+            command =
+                JobPostingRegistrationCommand(
+                    title = title,
+                    description = description,
+                    requirements = requirements,
+                ),
+        )
+        return "redirect:/dashboard"
     }
 
     @PostMapping("/resumes")

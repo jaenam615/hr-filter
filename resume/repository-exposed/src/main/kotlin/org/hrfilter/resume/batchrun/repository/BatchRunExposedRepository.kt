@@ -17,18 +17,19 @@ import java.time.Instant
 internal class BatchRunExposedRepository : BatchRunRepository {
     override fun save(batchRun: BatchRun): BatchRun =
         transaction {
-            val newId = BatchRunTable.insertAndGetId {
-                it[status] = batchRun.status
-                it[evaluatedCount] = batchRun.evaluatedCount
-                it[passedCount] = batchRun.passedCount
-                it[holdCount] = batchRun.holdCount
-                it[rejectedCount] = batchRun.rejectedCount
-                it[failedCount] = batchRun.failedCount
-                it[startedAt] = batchRun.startedAt
-                it[completedAt] = batchRun.completedAt
-                it[createdAt] = batchRun.createdAt
-                it[updatedAt] = batchRun.updatedAt
-            }
+            val newId =
+                BatchRunTable.insertAndGetId {
+                    it[status] = batchRun.status
+                    it[evaluatedCount] = batchRun.evaluatedCount
+                    it[passedCount] = batchRun.passedCount
+                    it[holdCount] = batchRun.holdCount
+                    it[rejectedCount] = batchRun.rejectedCount
+                    it[failedCount] = batchRun.failedCount
+                    it[startedAt] = batchRun.startedAt
+                    it[completedAt] = batchRun.completedAt
+                    it[createdAt] = batchRun.createdAt
+                    it[updatedAt] = batchRun.updatedAt
+                }
             batchRun.copy(batchRunId = newId.value)
         }
 

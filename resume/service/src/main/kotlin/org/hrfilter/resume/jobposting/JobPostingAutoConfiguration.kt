@@ -11,4 +11,10 @@ class JobPostingAutoConfiguration {
         JobPostingReaderServiceImpl(
             jobPostingRepository = jobPostingRepository,
         )
+
+    @Bean
+    fun jobPostingRegistrationServiceImpl(jobPostingRepository: JobPostingRepository): JobPostingRegistrationService =
+        JobPostingRegistrationServiceImpl(
+            jobPostingRepository = jobPostingRepository,
+        )
 }
