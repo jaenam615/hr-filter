@@ -2,9 +2,12 @@ package org.hrfilter.resume.batch
 
 import org.hrfilter.resume.batchrun.BatchRun
 import org.hrfilter.resume.batchrun.BatchRunStatus
-import org.hrfilter.resume.evaluation.EvaluationResult
 import org.hrfilter.resume.batchrun.repository.BatchRunRepository
+import org.hrfilter.resume.evaluation.EvaluationResult
 import org.hrfilter.resume.evaluation.repository.EvaluationResultRepository
+import org.hrfilter.resume.jobposting.JobPosting
+import org.hrfilter.resume.jobposting.JobPostingIdentity
+import org.hrfilter.resume.jobposting.of
 import org.hrfilter.resume.jobposting.repository.JobPostingRepository
 import org.hrfilter.resume.llm.BatchProcessingStatus
 import org.hrfilter.resume.llm.BatchResults
@@ -13,15 +16,12 @@ import org.hrfilter.resume.llm.LlmEvaluator
 import org.hrfilter.resume.notifier.BatchSummary
 import org.hrfilter.resume.notifier.Notifier
 import org.hrfilter.resume.parser.ResumeParser
-import org.hrfilter.resume.resume.repository.ResumeRepository
-import org.hrfilter.resume.storage.ResumeStorage
-import org.hrfilter.resume.jobposting.JobPosting
-import org.hrfilter.resume.jobposting.JobPostingIdentity
-import org.hrfilter.resume.jobposting.of
 import org.hrfilter.resume.resume.Resume
 import org.hrfilter.resume.resume.ResumeIdentity
 import org.hrfilter.resume.resume.ResumeStatus
 import org.hrfilter.resume.resume.of
+import org.hrfilter.resume.resume.repository.ResumeRepository
+import org.hrfilter.resume.storage.ResumeStorage
 import java.time.Instant
 
 interface BatchEvaluationService {

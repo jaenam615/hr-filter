@@ -20,6 +20,10 @@ jackson = "2.18.2"
 jakarta-mail = "2.1.3"
 angus-mail = "2.0.3"
 
+# Test
+kotest = "5.9.1"
+mockk = "1.13.13"
+
 [plugins]
 build-recipe = { id = "com.linecorp.build-recipe-plugin", version.ref = "build-recipe" }
 spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
@@ -60,3 +64,8 @@ jackson-module-kotlin = { group = "com.fasterxml.jackson.module", name = "jackso
 # Email
 jakarta-mail-api = { group = "jakarta.mail", name = "jakarta.mail-api", version.ref = "jakarta-mail" }
 angus-mail = { group = "org.eclipse.angus", name = "angus-mail", version.ref = "angus-mail" }
+
+# Test (Kotest DescribeSpec + MockK)
+kotest-runner-junit5 = { group = "io.kotest", name = "kotest-runner-junit5", version.ref = "kotest" }
+kotest-assertions-core = { group = "io.kotest", name = "kotest-assertions-core", version.ref = "kotest" }
+mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }

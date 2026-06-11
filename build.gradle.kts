@@ -104,6 +104,9 @@ configureByTypePrefix("kotlin") {
         testImplementation(enforcedPlatform(SpringBootPlugin.BOM_COORDINATES))
         testImplementation("org.springframework.boot:spring-boot-starter-test")
         testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test")
+        testImplementation(rootProject.libs.kotest.runner.junit5)
+        testImplementation(rootProject.libs.kotest.assertions.core)
+        testImplementation(rootProject.libs.mockk)
     }
 }
 
