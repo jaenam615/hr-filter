@@ -13,6 +13,10 @@ hrfilter:
     channel: ${HRFILTER_NOTIFIER_CHANNEL:slack}
     slack:
       webhook-url: ${HRFILTER_SLACK_WEBHOOK_URL:}
+  llm:
+    anthropic:
+      api-key: ${ANTHROPIC_API_KEY:}
+      model: ${HRFILTER_LLM_MODEL:claude-opus-4-8}
   storage:
     s3:
       endpoint: ${HRFILTER_S3_ENDPOINT:http://localhost:9000}
