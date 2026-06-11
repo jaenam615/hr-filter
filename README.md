@@ -140,27 +140,68 @@ flowchart TD
 
 ---
 
+## 사전 준비
+- Java 21
+- Docker
+
 ## 로컬 실행
 
 ```bash
+# 0. 시크릿/환경 변수 준비
+cp .env.example .env              # 값 채우기 (ANTHROPIC_API_KEY 등)
+set -a && source .env && set +a   # 현재 셸에 로드
+
 # 1. 인프라 (Postgres + MinIO + 버킷 초기화)
 docker compose up -d
 
-# 2. JDK 21 (jdk 함수는 ~/.zshrc 참고)
-jdk 21
-
-# 3. API 서버 — 대시보드 + REST + Swagger
+# 2. API 서버 — 대시보드 + REST + Swagger
 ./gradlew :application-api:bootRun
 #   대시보드  http://localhost:8080/dashboard
 #   Swagger   http://localhost:8080/swagger-ui/index.html
 
-# 4. 배치 서버 — 스케줄러 (local-dev 프로필: 매 1분)
-ANTHROPIC_API_KEY=sk-ant-... \
-HRFILTER_SLACK_WEBHOOK_URL=https://webhook.site/<id> \
+# 3. 배치 서버 — 스케줄러 (local-dev 프로필: 매 1분)
 ./gradlew :application-batch:bootRun --args='--spring.profiles.active=local-dev'
 ```
 
-테스트: `./gradlew test` (Kotest `DescribeSpec` + MockK 단위 테스트).
+> **시크릿은 `application.yml`에 두지 않는다.** yml은 `${VAR:기본값}` 플레이스홀더만 갖고
+> 실제 값은 환경 변수로 주입한다(12-factor). 로컬은 `.env`(gitignore 처리), 운영은
+> 시크릿 스토어(Vault / AWS Secrets Manager / K8s Secret)를 권장.
+
+### 환경 변수
+
+전체 목록과 기본값은 [`.env.example`](.env.example) 참고. 핵심:
+
+| 변수 | 설명 | 비고 |
+|---|---|---|
+| `ANTHROPIC_API_KEY` | LLM 평가 키 | 배치 서버 필수 |
+| `HRFILTER_NOTIFIER_CHANNEL` | `slack` / `teams` / `email` | 기본 `slack` |
+| `HRFILTER_SLACK_WEBHOOK_URL` | 알림 웹훅 | 검증 시 webhook.site 권장 |
+| `HRFILTER_LLM_MODEL` | 평가 모델 | 기본 `claude-opus-4-8` |
+| `SPRING_DATASOURCE_*` | Postgres 접속 | 로컬 docker-compose 기본값 |
+| `HRFILTER_S3_*` | MinIO / S3 접속 | 로컬 docker-compose 기본값 |
+
+### 포트
+
+| 구성 요소 | 포트 |
+|---|---|
+| API 서버 | 8080 (`local-dev` 프로필 12346) |
+| 배치 actuator | 12347 |
+| MinIO API / 콘솔 | 9000 / 9001 |
+| PostgreSQL | 5432 |
+
+### API 엔드포인트
+
+| 메서드 | 경로 | 설명 |
+|---|---|---|
+| `POST` | `/api/v1/resumes` | 이력서 업로드 (multipart) |
+| `GET` | `/api/v1/resumes/{id}` | 이력서 단건 조회 |
+| `GET` | `/api/v1/batch-runs/{id}/evaluations` | 배치별 평가 결과 |
+| `GET` | `/dashboard` | 대시보드 (HTML) |
+| `POST` | `/dashboard/resumes` | 대시보드 업로드 폼 |
+
+### 테스트
+
+`./gradlew test` — Kotest `DescribeSpec` + MockK 단위 테스트.
 
 ---
 
@@ -183,3 +224,20 @@ resume/
 application-api         # API 서버 진입점
 application-batch       # 배치 서버 진입점
 ```
+
+---
+
+## 현재 상태 / 로드맵
+
+검증된 것 ✅ — API 기동 · 이력서 업로드 → MinIO · 대시보드 · 어댑터 와이어링 · 배치 오케스트레이션 로직 · 단위 테스트.
+
+진행 중 / 예정:
+
+- [x] 배치 파이프라인 실 Anthropic 키로 end-to-end 완주 검증
+- [ ] 채용 공고 관리 (생성 API / 화면) — 현재는 DB 직접 입력
+- [ ] 인증·인가 (이력서는 민감 PII)
+- [ ] 배치 견고성 — 폴링 타임아웃, 실패 항목 재처리
+- [ ] 입력 검증(Bean Validation) + 전역 예외 핸들러
+- [ ] 통합 테스트, 관측성(메트릭/구조화 로깅)
+
+자세한 설계 배경은 [`docs/technical-challenges.md`](docs/technical-challenges.md), 진행 기록은 [`docs/devlog.md`](docs/devlog.md).
