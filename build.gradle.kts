@@ -39,6 +39,9 @@ configureByTypePrefix("kotlin") {
     configure<JavaPluginExtension> {
         sourceCompatibility = JavaVersion.VERSION_21
         targetCompatibility = JavaVersion.VERSION_21
+        toolchain {
+            languageVersion.set(JavaLanguageVersion.of(21))
+        }
     }
 
     configure<KotlinJvmProjectExtension> {

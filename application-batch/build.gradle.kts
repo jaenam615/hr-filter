@@ -7,7 +7,5 @@ dependencies {
     implementation(project(":resume:adapter-storage-s3"))
     implementation(project(":resume:adapter-notifier"))
 
-    implementation("org.testcontainers:testcontainers")
-    implementation("org.testcontainers:postgresql")
     runtimeOnly(rootProject.libs.postgres)
 }
