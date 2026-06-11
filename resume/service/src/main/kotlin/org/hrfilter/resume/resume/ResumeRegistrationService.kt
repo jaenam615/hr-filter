@@ -1,9 +1,9 @@
 package org.hrfilter.resume.resume
 
+import org.hrfilter.resume.jobposting.JobPostingIdentity
 import org.hrfilter.resume.resume.repository.ResumeRepository
 import org.hrfilter.resume.storage.ResumeStorage
 import org.hrfilter.resume.storage.ResumeUploadRequest
-import org.hrfilter.resume.jobposting.JobPostingIdentity
 import java.time.Instant
 import java.util.UUID
 
@@ -26,28 +26,31 @@ internal class ResumeRegistrationServiceImpl(
 ) : ResumeRegistrationService {
     override fun register(command: ResumeRegistrationCommand): Resume {
         val now = Instant.now()
-        val objectKey = resumeStorage.upload(
-            request = ResumeUploadRequest(
-                jobPostingId = command.jobPostingIdentity.jobPostingId,
-                uploadedAt = now,
-                applicantIdentifier = UUID.randomUUID().toString(),
-                content = command.content,
-                mimeType = command.mimeType,
-                fileExtension = command.fileExtension,
-            ),
-        )
+        val objectKey =
+            resumeStorage.upload(
+                request =
+                    ResumeUploadRequest(
+                        jobPostingId = command.jobPostingIdentity.jobPostingId,
+                        uploadedAt = now,
+                        applicantIdentifier = UUID.randomUUID().toString(),
+                        content = command.content,
+                        mimeType = command.mimeType,
+                        fileExtension = command.fileExtension,
+                    ),
+            )
         return resumeRepository.save(
-            resume = Resume(
-                resumeId = 0L,
-                jobPostingId = command.jobPostingIdentity.jobPostingId,
-                applicantName = command.applicantName,
-                applicantEmail = command.applicantEmail,
-                objectKey = objectKey,
-                mimeType = command.mimeType,
-                status = ResumeStatus.UPLOADED,
-                createdAt = now,
-                updatedAt = now,
-            ),
+            resume =
+                Resume(
+                    resumeId = 0L,
+                    jobPostingId = command.jobPostingIdentity.jobPostingId,
+                    applicantName = command.applicantName,
+                    applicantEmail = command.applicantEmail,
+                    objectKey = objectKey,
+                    mimeType = command.mimeType,
+                    status = ResumeStatus.UPLOADED,
+                    createdAt = now,
+                    updatedAt = now,
+                ),
         )
     }
 }

@@ -2,3 +2,4 @@ org.hrfilter.resume.jobposting.JobPostingAutoConfiguration
 org.hrfilter.resume.resume.ResumeAutoConfiguration
 org.hrfilter.resume.batch.BatchAutoConfiguration
 org.hrfilter.resume.evaluation.EvaluationAutoConfiguration
+org.hrfilter.resume.batchrun.BatchRunReaderAutoConfiguration

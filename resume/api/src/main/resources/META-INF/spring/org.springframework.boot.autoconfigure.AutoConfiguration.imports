@@ -1,2 +1,3 @@
 org.hrfilter.resume.api.resume.ResumeApiAutoConfiguration
 org.hrfilter.resume.api.batchrun.BatchRunApiAutoConfiguration
+org.hrfilter.resume.api.dashboard.DashboardAutoConfiguration

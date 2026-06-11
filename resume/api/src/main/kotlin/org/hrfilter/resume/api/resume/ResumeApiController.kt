@@ -33,16 +33,18 @@ class ResumeApiController(
         @RequestParam("applicantEmail") applicantEmail: String,
         @RequestPart("file") file: MultipartFile,
     ): ResumeResponse {
-        val resume = resumeRegistrationService.register(
-            command = ResumeRegistrationCommand(
-                jobPostingIdentity = JobPostingIdentity.of(jobPostingId = jobPostingId),
-                applicantName = applicantName,
-                applicantEmail = applicantEmail,
-                content = file.bytes,
-                mimeType = file.contentType ?: MediaType.APPLICATION_OCTET_STREAM_VALUE,
-                fileExtension = file.originalFilename?.substringAfterLast('.', "") ?: "",
-            ),
-        )
+        val resume =
+            resumeRegistrationService.register(
+                command =
+                    ResumeRegistrationCommand(
+                        jobPostingIdentity = JobPostingIdentity.of(jobPostingId = jobPostingId),
+                        applicantName = applicantName,
+                        applicantEmail = applicantEmail,
+                        content = file.bytes,
+                        mimeType = file.contentType ?: MediaType.APPLICATION_OCTET_STREAM_VALUE,
+                        fileExtension = file.originalFilename?.substringAfterLast('.', "") ?: "",
+                    ),
+            )
         return ResumeResponse.from(resume = resume)
     }
 

@@ -1,8 +1,8 @@
 package org.hrfilter.resume.evaluation
 
 import org.hrfilter.resume.batchrun.BatchRunIdentity
-import org.hrfilter.resume.exception.EvaluationResultNotFoundException
 import org.hrfilter.resume.evaluation.repository.EvaluationResultRepository
+import org.hrfilter.resume.exception.EvaluationResultNotFoundException
 import org.hrfilter.resume.resume.ResumeIdentity
 
 interface EvaluationReaderService {
