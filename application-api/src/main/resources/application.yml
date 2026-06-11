@@ -11,6 +11,8 @@ spring:
 hrfilter:
   notifier:
     channel: ${HRFILTER_NOTIFIER_CHANNEL:slack}
+    slack:
+      webhook-url: ${HRFILTER_SLACK_WEBHOOK_URL:}
   storage:
     s3:
       endpoint: ${HRFILTER_S3_ENDPOINT:http://localhost:9000}
