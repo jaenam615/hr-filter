@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2414d660-3c34-4328-81c7-9cf5fc98c0f3" name="Changes" comment="chore: env example 추가">
+    <list default="true" id="2414d660-3c34-4328-81c7-9cf5fc98c0f3" name="Changes" comment="feat: 채용공고 관리">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -110,6 +112,10 @@
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/resume/service" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/sample/resume" />
+      <recent name="$PROJECT_DIR$/test-images" />
+    </key>
   </component>
   <component name="RunManager" selected="Spring Boot.HrFilterApiApplication">
     <configuration name="HrFilterApiApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
@@ -144,7 +150,7 @@
       <updated>1779293531322</updated>
       <workItem from="1779293532655" duration="26934000" />
       <workItem from="1779817867127" duration="690000" />
-      <workItem from="1780917691895" duration="21896000" />
+      <workItem from="1780917691895" duration="27267000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <option name="closed" value="true" />
@@ -266,7 +272,23 @@
       <option name="project" value="LOCAL" />
       <updated>1781201317022</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="chore: Readme 수정">
+      <option name="closed" value="true" />
+      <created>1781201737101</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1781201737101</updated>
+    </task>
+    <task id="LOCAL-00017" summary="feat: 채용공고 관리">
+      <option name="closed" value="true" />
+      <created>1781202109209</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1781202109209</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -288,7 +310,9 @@
     <MESSAGE value="docs: 설계 및 주요하게 생각한 과제 정리" />
     <MESSAGE value="docs: README - architecture, 개발 철학 등" />
     <MESSAGE value="chore: env example 추가" />
-    <option name="LAST_COMMIT_MESSAGE" value="chore: env example 추가" />
+    <MESSAGE value="chore: Readme 수정" />
+    <MESSAGE value="feat: 채용공고 관리" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: 채용공고 관리" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
