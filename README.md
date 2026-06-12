@@ -141,6 +141,32 @@ flowchart TD
 
 ---
 
+## 데이터 모델 & 입력 형식
+
+```mermaid
+erDiagram
+    JOB_POSTING ||--o{ RESUME : "지원 (jobPostingId FK)"
+    RESUME ||--o{ EVALUATION_RESULT : "평가됨"
+    BATCH_RUN ||--o{ EVALUATION_RESULT : "배치 단위"
+```
+
+- **이력서 ↔ 공고 연결**: 이력서는 **업로드 시점에 `jobPostingId`로 공고에 귀속**된다(대시보드 드롭다운 / API 파라미터 → `resume.job_posting_id` FK, NOT NULL). **1 이력서 → 1 공고**이며, 평가는 이력서마다 *자기 공고* 기준으로 수행된다. 한 사람이 여러 공고에 지원하면 공고별로 업로드(별도 row).
+
+**입력 형식**
+
+| 대상 | 엔드포인트 | 형식 |
+|---|---|---|
+| 채용 공고 | `POST /api/v1/job-postings` | **JSON 텍스트** — `title` / `description` / `requirements` |
+| 이력서 | `POST /api/v1/resumes` | **multipart** — `jobPostingId` + 지원자 정보 + `file`(포맷 무관, Tika가 자동 감지·파싱) |
+
+**분석(LLM)이 받는 것 = plain text**
+
+LLM은 **원본 파일을 보지 않는다.** 배치가 이력서 파일을 **Tika로 텍스트 추출**하고, 공고는 저장된 텍스트 필드를 그대로 써서 프롬프트를 조립한다 → 파일 포맷 차이는 Tika 어댑터가 흡수하고 분석 레이어는 포맷 무관.
+
+> ⚠️ 스캔 이미지 PDF(텍스트 레이어 없음)는 추출할 텍스트가 없어 평가 품질이 떨어진다. OCR은 스코프 밖(텍스트 기반 PDF/DOCX/HWP 등 대상).
+
+---
+
 ## 사전 준비
 - Java 21
 - Docker
