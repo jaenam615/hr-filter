@@ -2,104 +2,194 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>hr-filter 대시보드</title>
     <style>
-        body { font-family: -apple-system, sans-serif; max-width: 860px; margin: 40px auto; padding: 0 16px; color: #222; }
-        h1 { font-size: 1.5rem; }
-        h2 { font-size: 1.1rem; margin-top: 2rem; border-bottom: 1px solid #eee; padding-bottom: 4px; }
-        form { background: #f7f7f5; padding: 16px; border-radius: 8px; }
-        label { display: block; margin: 8px 0 2px; font-size: 0.85rem; color: #555; }
-        input { padding: 6px; width: 100%; max-width: 360px; box-sizing: border-box; }
-        button { margin-top: 12px; padding: 8px 16px; background: #2d6cdf; color: #fff; border: 0; border-radius: 6px; cursor: pointer; }
-        table { width: 100%; border-collapse: collapse; margin-top: 8px; }
-        th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid #eee; font-size: 0.9rem; vertical-align: top; }
-        .verdict-PASS { color: #1a7f37; font-weight: 600; }
-        .verdict-HOLD { color: #9a6700; font-weight: 600; }
-        .verdict-REJECT { color: #cf222e; font-weight: 600; }
-        .muted { color: #888; }
-        .summary span { margin-right: 14px; }
+        :root {
+            --bg: #f1f5f9;
+            --card: #ffffff;
+            --border: #e2e8f0;
+            --text: #0f172a;
+            --muted: #64748b;
+            --accent: #4f46e5;
+            --accent-hover: #4338ca;
+            --pass-bg: #dcfce7; --pass-fg: #15803d;
+            --hold-bg: #fef9c3; --hold-fg: #a16207;
+            --reject-bg: #fee2e2; --reject-fg: #b91c1c;
+            --shadow: 0 1px 2px rgba(15,23,42,.06), 0 1px 3px rgba(15,23,42,.1);
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0; background: var(--bg); color: var(--text);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Apple SD Gothic Neo", Pretendard, Roboto, sans-serif;
+            line-height: 1.5;
+        }
+        .topbar {
+            background: #0f172a; color: #fff; padding: 14px 24px;
+            display: flex; align-items: baseline; gap: 10px;
+        }
+        .topbar h1 { font-size: 1.05rem; margin: 0; font-weight: 700; letter-spacing: -.01em; }
+        .topbar span { font-size: .8rem; color: #94a3b8; }
+        .container { max-width: 980px; margin: 24px auto; padding: 0 20px; display: flex; flex-direction: column; gap: 20px; }
+        .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        @media (max-width: 720px) { .grid2 { grid-template-columns: 1fr; } }
+
+        .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; box-shadow: var(--shadow); overflow: hidden; }
+        .card > h2 {
+            margin: 0; padding: 14px 18px; font-size: .8rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: .04em; color: var(--muted);
+            border-bottom: 1px solid var(--border); background: #fafbfc;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .card .body { padding: 18px; }
+
+        label { display: block; margin: 0 0 4px; font-size: .8rem; font-weight: 600; color: var(--muted); }
+        .field { margin-bottom: 12px; }
+        input, select {
+            width: 100%; padding: 9px 11px; font-size: .9rem; color: var(--text);
+            border: 1px solid var(--border); border-radius: 8px; background: #fff; transition: border-color .12s, box-shadow .12s;
+        }
+        input:focus, select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(79,70,229,.12); }
+        button {
+            margin-top: 4px; padding: 9px 16px; font-size: .88rem; font-weight: 600;
+            background: var(--accent); color: #fff; border: 0; border-radius: 8px; cursor: pointer; transition: background .12s;
+        }
+        button:hover { background: var(--accent-hover); }
+
+        table { width: 100%; border-collapse: collapse; font-size: .88rem; }
+        thead th {
+            text-align: left; padding: 10px 18px; font-size: .72rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: .03em; color: var(--muted);
+            background: #fafbfc; border-bottom: 1px solid var(--border);
+        }
+        tbody td { padding: 11px 18px; border-bottom: 1px solid #f1f5f9; vertical-align: top; }
+        tbody tr:last-child td { border-bottom: 0; }
+        tbody tr:hover { background: #fafbff; }
+        td.num { font-variant-numeric: tabular-nums; }
+        .reason { max-width: 480px; color: #334155; line-height: 1.55; }
+        .ts { color: var(--muted); font-size: .8rem; white-space: nowrap; }
+        .score { font-weight: 700; font-variant-numeric: tabular-nums; }
+
+        .badge {
+            display: inline-block; padding: 2px 10px; border-radius: 999px;
+            font-size: .75rem; font-weight: 700; letter-spacing: .02em;
+        }
+        .badge.PASS, .badge.COMPLETED { background: var(--pass-bg); color: var(--pass-fg); }
+        .badge.HOLD, .badge.RUNNING { background: var(--hold-bg); color: var(--hold-fg); }
+        .badge.REJECT, .badge.FAILED { background: var(--reject-bg); color: var(--reject-fg); }
+
+        .empty { padding: 28px 18px; text-align: center; color: var(--muted); font-size: .88rem; }
+        .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); display: inline-block; }
     </style>
 </head>
 <body>
-<h1>hr-filter 대시보드</h1>
+<header class="topbar">
+    <h1>hr-filter</h1>
+    <span>AI 서류 심사 대시보드</span>
+</header>
 
-<h2>채용 공고</h2>
-<form th:action="@{/dashboard/job-postings}" method="post">
-    <label for="title">제목</label>
-    <input type="text" id="title" name="title" required/>
-    <label for="description">설명</label>
-    <input type="text" id="description" name="description" required/>
-    <label for="requirements">요구사항</label>
-    <input type="text" id="requirements" name="requirements" required/>
-    <button type="submit">공고 등록</button>
-</form>
-<p th:if="${jobPostings.isEmpty()}" class="muted">등록된 공고가 없습니다.</p>
-<table th:unless="${jobPostings.isEmpty()}">
-    <thead><tr><th>ID</th><th>제목</th><th>요구사항</th></tr></thead>
-    <tbody>
-    <tr th:each="jp : ${jobPostings}">
-        <td th:text="${jp.jobPostingId}"></td>
-        <td th:text="${jp.title}"></td>
-        <td th:text="${jp.requirements}"></td>
-    </tr>
-    </tbody>
-</table>
+<main class="container">
 
-<h2>이력서 업로드</h2>
-<form th:action="@{/dashboard/resumes}" method="post" enctype="multipart/form-data">
-    <label for="jobPostingId">채용 공고</label>
-    <select id="jobPostingId" name="jobPostingId" required>
-        <option th:each="jp : ${jobPostings}" th:value="${jp.jobPostingId}"
-                th:text="'#' + ${jp.jobPostingId} + ' ' + ${jp.title}"></option>
-    </select>
-    <label for="applicantName">지원자 이름</label>
-    <input type="text" id="applicantName" name="applicantName" required/>
-    <label for="applicantEmail">지원자 이메일</label>
-    <input type="email" id="applicantEmail" name="applicantEmail" required/>
-    <label for="file">이력서 파일</label>
-    <input type="file" id="file" name="file" required/>
-    <button type="submit">업로드 → MinIO</button>
-</form>
+    <div class="grid2">
+        <!-- 채용 공고 등록 -->
+        <section class="card">
+            <h2><span class="dot"></span> 채용 공고 등록</h2>
+            <div class="body">
+                <form th:action="@{/dashboard/job-postings}" method="post">
+                    <div class="field"><label for="title">제목</label>
+                        <input type="text" id="title" name="title" placeholder="예: 백엔드 엔지니어" required/></div>
+                    <div class="field"><label for="description">설명</label>
+                        <input type="text" id="description" name="description" required/></div>
+                    <div class="field"><label for="requirements">요구사항</label>
+                        <input type="text" id="requirements" name="requirements" required/></div>
+                    <button type="submit">공고 등록</button>
+                </form>
+            </div>
+        </section>
 
-<h2>최근 배치 실행</h2>
-<p th:if="${batchRuns.isEmpty()}" class="muted">아직 배치 실행 기록이 없습니다.</p>
-<table th:unless="${batchRuns.isEmpty()}">
-    <thead>
-    <tr><th>ID</th><th>상태</th><th>평가</th><th>통과</th><th>보류</th><th>탈락</th><th>실패</th><th>시작</th></tr>
-    </thead>
-    <tbody>
-    <tr th:each="run : ${batchRuns}">
-        <td th:text="${run.batchRunId}"></td>
-        <td th:text="${run.status}"></td>
-        <td th:text="${run.evaluatedCount}"></td>
-        <td th:text="${run.passedCount}"></td>
-        <td th:text="${run.holdCount}"></td>
-        <td th:text="${run.rejectedCount}"></td>
-        <td th:text="${run.failedCount}"></td>
-        <td th:text="${run.startedAt}"></td>
-    </tr>
-    </tbody>
-</table>
+        <!-- 이력서 업로드 -->
+        <section class="card">
+            <h2><span class="dot"></span> 이력서 업로드</h2>
+            <div class="body">
+                <form th:action="@{/dashboard/resumes}" method="post" enctype="multipart/form-data">
+                    <div class="field"><label for="jobPostingId">채용 공고</label>
+                        <select id="jobPostingId" name="jobPostingId" required>
+                            <option th:each="jp : ${jobPostings}" th:value="${jp.jobPostingId}"
+                                    th:text="'#' + ${jp.jobPostingId} + ' · ' + ${jp.title}"></option>
+                        </select></div>
+                    <div class="field"><label for="applicantName">지원자 이름</label>
+                        <input type="text" id="applicantName" name="applicantName" required/></div>
+                    <div class="field"><label for="applicantEmail">지원자 이메일</label>
+                        <input type="email" id="applicantEmail" name="applicantEmail" required/></div>
+                    <div class="field"><label for="file">이력서 파일</label>
+                        <input type="file" id="file" name="file" required/></div>
+                    <button type="submit">업로드</button>
+                </form>
+            </div>
+        </section>
+    </div>
 
-<h2>
-    평가 결과
-    <span class="muted" th:if="${latestRun != null}"
-          th:text="'(최신 배치 #' + ${latestRun.batchRunId} + ')'"></span>
-</h2>
-<p th:if="${rows.isEmpty()}" class="muted">표시할 평가 결과가 없습니다.</p>
-<table th:unless="${rows.isEmpty()}">
-    <thead>
-    <tr><th>지원자</th><th>판정</th><th>점수</th><th>사유</th><th>평가시각</th></tr>
-    </thead>
-    <tbody>
-    <tr th:each="row : ${rows}">
-        <td th:text="${row.applicantName}"></td>
-        <td th:classappend="'verdict-' + ${row.verdict}" th:text="${row.verdict}"></td>
-        <td th:text="${row.score}"></td>
-        <td th:text="${row.reasoning}"></td>
-        <td class="muted" th:text="${row.evaluatedAt}"></td>
-    </tr>
-    </tbody>
-</table>
+    <!-- 채용 공고 목록 -->
+    <section class="card">
+        <h2><span class="dot"></span> 채용 공고</h2>
+        <div th:if="${jobPostings.isEmpty()}" class="empty">등록된 공고가 없습니다.</div>
+        <table th:unless="${jobPostings.isEmpty()}">
+            <thead><tr><th>ID</th><th>제목</th><th>요구사항</th></tr></thead>
+            <tbody>
+            <tr th:each="jp : ${jobPostings}">
+                <td class="num" th:text="${jp.jobPostingId}"></td>
+                <td th:text="${jp.title}"></td>
+                <td class="reason" th:text="${jp.requirements}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- 최근 배치 실행 -->
+    <section class="card">
+        <h2><span class="dot"></span> 최근 배치 실행</h2>
+        <div th:if="${batchRuns.isEmpty()}" class="empty">아직 배치 실행 기록이 없습니다.</div>
+        <table th:unless="${batchRuns.isEmpty()}">
+            <thead>
+            <tr><th>ID</th><th>상태</th><th>평가</th><th>통과</th><th>보류</th><th>탈락</th><th>실패</th><th>시작</th></tr>
+            </thead>
+            <tbody>
+            <tr th:each="run : ${batchRuns}">
+                <td class="num" th:text="${run.batchRunId}"></td>
+                <td><span class="badge" th:classappend="${run.status}" th:text="${run.status}"></span></td>
+                <td class="num" th:text="${run.evaluatedCount}"></td>
+                <td class="num" th:text="${run.passedCount}"></td>
+                <td class="num" th:text="${run.holdCount}"></td>
+                <td class="num" th:text="${run.rejectedCount}"></td>
+                <td class="num" th:text="${run.failedCount}"></td>
+                <td class="ts" th:text="${run.startedAt}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- 평가 결과 -->
+    <section class="card">
+        <h2>
+            <span class="dot"></span> 평가 결과
+            <span style="font-weight:500;text-transform:none;letter-spacing:0;color:var(--muted)"
+                  th:if="${latestRun != null}" th:text="'최신 배치 #' + ${latestRun.batchRunId}"></span>
+        </h2>
+        <div th:if="${rows.isEmpty()}" class="empty">표시할 평가 결과가 없습니다.</div>
+        <table th:unless="${rows.isEmpty()}">
+            <thead><tr><th>지원자</th><th>판정</th><th>점수</th><th>사유</th><th>평가 시각</th></tr></thead>
+            <tbody>
+            <tr th:each="row : ${rows}">
+                <td th:text="${row.applicantName}"></td>
+                <td><span class="badge" th:classappend="${row.verdict}" th:text="${row.verdict}"></span></td>
+                <td class="score" th:text="${row.score}"></td>
+                <td class="reason" th:text="${row.reasoning}"></td>
+                <td class="ts" th:text="${row.evaluatedAt}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+
+</main>
 </body>
 </html>
