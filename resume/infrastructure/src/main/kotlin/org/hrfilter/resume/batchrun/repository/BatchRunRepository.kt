@@ -11,6 +11,8 @@ interface BatchRunRepository {
 
     fun findByBatchRunIdentity(batchRunIdentity: BatchRunIdentity): BatchRun?
 
+    fun findByStatus(status: BatchRunStatus): List<BatchRun>
+
     fun findLatestN(
         limit: Int,
         offset: Int,

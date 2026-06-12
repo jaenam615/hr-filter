@@ -12,6 +12,7 @@ data class BatchRun(
     override val failedCount: Int,
     override val startedAt: Instant,
     override val completedAt: Instant?,
+    override val providerBatchId: String?,
     override val createdAt: Instant,
     override val updatedAt: Instant,
 ) : BatchRunModel

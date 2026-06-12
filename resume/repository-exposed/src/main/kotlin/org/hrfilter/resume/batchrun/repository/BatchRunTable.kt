@@ -13,6 +13,7 @@ internal object BatchRunTable : LongIdTable(name = "batch_run", columnName = "ba
     val failedCount = integer("failed_count").default(0)
     val startedAt = timestamp("started_at")
     val completedAt = timestamp("completed_at").nullable()
+    val providerBatchId = varchar("provider_batch_id", 100).nullable()
     val createdAt = timestamp("created_at")
     val updatedAt = timestamp("updated_at")
 }

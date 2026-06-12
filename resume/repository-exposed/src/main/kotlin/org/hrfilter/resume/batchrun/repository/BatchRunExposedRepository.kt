@@ -27,6 +27,7 @@ internal class BatchRunExposedRepository : BatchRunRepository {
                     it[failedCount] = batchRun.failedCount
                     it[startedAt] = batchRun.startedAt
                     it[completedAt] = batchRun.completedAt
+                    it[providerBatchId] = batchRun.providerBatchId
                     it[createdAt] = batchRun.createdAt
                     it[updatedAt] = batchRun.updatedAt
                 }
@@ -40,6 +41,15 @@ internal class BatchRunExposedRepository : BatchRunRepository {
                 .where { BatchRunTable.id eq batchRunIdentity.batchRunId }
                 .singleOrNull()
                 ?.toBatchRun()
+        }
+
+    override fun findByStatus(status: BatchRunStatus): List<BatchRun> =
+        transaction {
+            BatchRunTable
+                .selectAll()
+                .where { BatchRunTable.status eq status }
+                .orderBy(BatchRunTable.startedAt to SortOrder.ASC)
+                .map { it.toBatchRun() }
         }
 
     override fun findLatestN(
@@ -97,6 +107,7 @@ internal class BatchRunExposedRepository : BatchRunRepository {
             failedCount = this[BatchRunTable.failedCount],
             startedAt = this[BatchRunTable.startedAt],
             completedAt = this[BatchRunTable.completedAt],
+            providerBatchId = this[BatchRunTable.providerBatchId],
             createdAt = this[BatchRunTable.createdAt],
             updatedAt = this[BatchRunTable.updatedAt],
         )

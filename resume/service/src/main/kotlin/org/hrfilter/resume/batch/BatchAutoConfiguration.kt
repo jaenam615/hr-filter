@@ -9,29 +9,45 @@ import org.hrfilter.resume.parser.ResumeParser
 import org.hrfilter.resume.resume.repository.ResumeRepository
 import org.hrfilter.resume.storage.ResumeStorage
 import org.springframework.boot.autoconfigure.AutoConfiguration
+import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean
 
 @AutoConfiguration
+@EnableConfigurationProperties(BatchCollectionProperties::class)
 class BatchAutoConfiguration {
     @Bean
-    fun batchEvaluationServiceImpl(
+    fun batchSubmissionService(
         batchRunRepository: BatchRunRepository,
         resumeRepository: ResumeRepository,
         jobPostingRepository: JobPostingRepository,
-        evaluationResultRepository: EvaluationResultRepository,
         storage: ResumeStorage,
         resumeParser: ResumeParser,
         llmEvaluator: LlmEvaluator,
-        notifier: Notifier,
-    ): BatchEvaluationService =
-        BatchEvaluationServiceImpl(
+    ): BatchSubmissionService =
+        BatchSubmissionServiceImpl(
             batchRunRepository = batchRunRepository,
             resumeRepository = resumeRepository,
             jobPostingRepository = jobPostingRepository,
-            evaluationResultRepository = evaluationResultRepository,
             storage = storage,
             resumeParser = resumeParser,
             llmEvaluator = llmEvaluator,
+        )
+
+    @Bean
+    fun batchCollectionService(
+        batchRunRepository: BatchRunRepository,
+        resumeRepository: ResumeRepository,
+        evaluationResultRepository: EvaluationResultRepository,
+        llmEvaluator: LlmEvaluator,
+        notifier: Notifier,
+        collectionProperties: BatchCollectionProperties,
+    ): BatchCollectionService =
+        BatchCollectionServiceImpl(
+            batchRunRepository = batchRunRepository,
+            resumeRepository = resumeRepository,
+            evaluationResultRepository = evaluationResultRepository,
+            llmEvaluator = llmEvaluator,
             notifier = notifier,
+            maxAgeHours = collectionProperties.maxAgeHours,
         )
 }

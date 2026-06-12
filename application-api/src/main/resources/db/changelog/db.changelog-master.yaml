@@ -1,3 +1,5 @@
 databaseChangeLog:
   - include:
       file: classpath:/db/changelog/resume/db.changelog-initial-schema.yaml
+  - include:
+      file: classpath:/db/changelog/resume/db.changelog-add-provider-batch-id.yaml

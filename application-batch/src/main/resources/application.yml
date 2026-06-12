@@ -27,7 +27,10 @@ hrfilter:
       region: ${HRFILTER_S3_REGION:us-east-1}
       bucket: ${HRFILTER_S3_BUCKET:hrfilter-resumes}
   batch:
+    # 제출: 하루 2회 (오전 8시, 오후 2시)
     cron: "0 0 8,14 * * *"
+    # 수거: 5분마다 RUNNING 배치 폴링 (논블로킹 재조정)
+    collect-cron: "0 */5 * * * *"
 
 management:
   server:
@@ -52,8 +55,9 @@ spring:
 
 hrfilter:
   batch:
-    # local: 매 1분마다 (테스트용)
+    # local: 제출·수거 모두 매 1분 (테스트용)
     cron: "0 * * * * *"
+    collect-cron: "0 * * * * *"
 
 management:
   endpoints:

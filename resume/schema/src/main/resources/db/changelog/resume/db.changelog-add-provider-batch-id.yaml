@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20260612-batch-run-add-provider-batch-id
+      author: hrfilter
+      changes:
+        - addColumn:
+            tableName: batch_run
+            columns:
+              - column:
+                  name: provider_batch_id
+                  type: VARCHAR(100)

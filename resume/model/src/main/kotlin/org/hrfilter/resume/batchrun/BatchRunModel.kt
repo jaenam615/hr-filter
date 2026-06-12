@@ -12,6 +12,9 @@ interface BatchRunProps {
     val failedCount: Int
     val startedAt: Instant
     val completedAt: Instant?
+
+    // LLM 공급자(Anthropic) 배치 ID. 제출 후 수거 잡이 폴링에 사용.
+    val providerBatchId: String?
 }
 
 interface BatchRunModel :
