@@ -1,6 +1,7 @@
 package org.hrfilter.resume.api.jobposting
 
 import io.swagger.v3.oas.annotations.Operation
+import jakarta.validation.Valid
 import org.hrfilter.resume.api.jobposting.dto.JobPostingCreateRequest
 import org.hrfilter.resume.api.jobposting.dto.JobPostingResponse
 import org.hrfilter.resume.jobposting.JobPostingReaderService
@@ -21,7 +22,7 @@ class JobPostingApiController(
     @PostMapping
     @Operation(summary = "채용 공고 등록", operationId = "createJobPosting")
     fun create(
-        @RequestBody request: JobPostingCreateRequest,
+        @Valid @RequestBody request: JobPostingCreateRequest,
     ): JobPostingResponse =
         JobPostingResponse.from(
             jobPosting =

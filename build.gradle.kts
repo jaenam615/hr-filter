@@ -52,6 +52,8 @@ configureByTypePrefix("kotlin") {
                     "-Xjsr305=strict",
                     "-Xjvm-default=all",
                     "-opt-in=kotlin.RequiresOptIn",
+                    // 파라미터명 메타데이터 방출 → @RequestParam/검증 위반 메시지에 실제 인자명 노출
+                    "-java-parameters",
                 )
         }
     }

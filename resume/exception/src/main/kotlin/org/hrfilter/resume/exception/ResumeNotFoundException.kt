@@ -1,3 +1,3 @@
 package org.hrfilter.resume.exception
 
-class ResumeNotFoundException : RuntimeException("Resume not found")
+class ResumeNotFoundException : NotFoundException("Resume not found")

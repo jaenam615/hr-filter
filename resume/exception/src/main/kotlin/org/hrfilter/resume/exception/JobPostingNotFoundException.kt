@@ -1,3 +1,3 @@
 package org.hrfilter.resume.exception
 
-class JobPostingNotFoundException : RuntimeException("Job posting not found")
+class JobPostingNotFoundException : NotFoundException("Job posting not found")

@@ -1,3 +1,3 @@
 package org.hrfilter.resume.exception
 
-class EvaluationResultNotFoundException : RuntimeException("Evaluation result not found")
+class EvaluationResultNotFoundException : NotFoundException("Evaluation result not found")
