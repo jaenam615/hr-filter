@@ -1,7 +1,5 @@
 package org.hrfilter.resume.resume
 
-import org.hrfilter.resume.AuditProps
-import org.hrfilter.resume.jobposting.JobPostingIdentity
 import java.time.Instant
 
 data class Resume(
