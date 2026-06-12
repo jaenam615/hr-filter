@@ -310,3 +310,6 @@ application-batch       # 배치 서버 진입점
 
 - webhook 테스트
 ![img.png](test-images/img.png)
+
+- 배치 결과 
+- ![img-batch.png](test-images/img-batch.png)
