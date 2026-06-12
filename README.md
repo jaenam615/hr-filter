@@ -114,8 +114,9 @@ flowchart LR
 ## 평가 파이프라인
 
 이력서 평가는 지연 허용 업무이므로 동기 호출 대신 **비동기 배치**(Anthropic Message
-Batches API, 50% 비용 절감)로 처리한다. 스케줄러가 신규 이력서를 모아 제출하고, 결과를
-폴링해 저장한 뒤 요약 알림을 보낸다.
+Batches API, 50% 비용 절감)로 처리한다. Batches는 완료 푸시(webhook)가 없어, **제출과 수거를
+두 스케줄 잡으로 분리**한다 — 제출 잡은 배치 ID를 DB에 영속화하고 즉시 리턴, 수거 잡이 주기적으로
+폴링해 완료를 감지한다(논블로킹·재시작 안전). 설계 근거는 [`docs/technical-challenges.md`](docs/technical-challenges.md) §2.
 
 ```mermaid
 flowchart TD
@@ -123,18 +124,18 @@ flowchart TD
     UP --> S3[("MinIO: 원본 저장")]
     UP --> DB1[("DB: resume = UPLOADED")]
 
-    CRON{{"스케줄러<br/>매일 08시 · 14시"}} --> EVAL["BatchEvaluationService.evaluate()"]
-    EVAL -->|UPLOADED 조회| DB1
-    EVAL -->|배치런 생성 RUNNING| DB2[("batch_run")]
-    EVAL -->|이력서별| DL["S3 다운로드 → Tika 파싱"]
-    DL --> SUB["Anthropic Batches 제출<br/>(JSON Schema 강제)"]
-    SUB --> POLL{"30초 폴링"}
-    POLL -->|IN_PROGRESS| POLL
+    SUBMIT{{"제출 잡<br/>매일 08 · 14시"}} -->|"RUNNING 있으면 skip"| GUARD{진행 중 배치?}
+    GUARD -->|없음| PICK["UPLOADED 조회 → S3 다운로드 → Tika 파싱"]
+    PICK --> SUB["Anthropic Batches 제출<br/>(JSON Schema 강제)"]
+    SUB --> PERSIST["batch_run = RUNNING + provider_batch_id 저장<br/>resume = SUBMITTED"]
+
+    COLLECT{{"수거 잡<br/>5분 주기"}} -->|RUNNING 폴링| POLL{배치 상태?}
+    POLL -->|IN_PROGRESS| WAIT["다음 틱 (25h 초과 시 FAILED)"]
     POLL -->|COMPLETED| SAVE["결과 저장<br/>resume=EVALUATED · 카운터 원자 증가"]
-    POLL -->|FAILED| FAIL["batch_run = FAILED"]
+    POLL -->|FAILED| REVERT["resume = UPLOADED 롤백 (재시도)"]
     SAVE --> DONE["batch_run = COMPLETED"]
     DONE --> NOTI["요약 알림"]
-    FAIL --> NOTI
+    REVERT --> NOTI
     NOTI --> DASH["대시보드에서 결과 검토"]
 ```
 
@@ -193,11 +194,26 @@ docker compose up -d
 
 | 메서드 | 경로 | 설명 |
 |---|---|---|
+| `POST` | `/api/v1/job-postings` | 채용 공고 등록 |
+| `GET` | `/api/v1/job-postings` | 채용 공고 목록 |
 | `POST` | `/api/v1/resumes` | 이력서 업로드 (multipart) |
 | `GET` | `/api/v1/resumes/{id}` | 이력서 단건 조회 |
 | `GET` | `/api/v1/batch-runs/{id}/evaluations` | 배치별 평가 결과 |
 | `GET` | `/dashboard` | 대시보드 (HTML) |
+| `POST` | `/dashboard/job-postings` | 대시보드 공고 등록 폼 |
 | `POST` | `/dashboard/resumes` | 대시보드 업로드 폼 |
+
+입력 검증 실패는 `400` + `fieldErrors`, 리소스 없음은 `404`로 일관된 에러 응답을 반환한다.
+
+### 샘플 테스트런
+
+`sample/`의 JD·이력서로 전체 파이프라인을 한 번 돌려보려면:
+
+```bash
+scripts/sample-test-run.sh --reset   # 공고 생성 → 이력서 업로드 → 평가 대기 → 결과 출력
+```
+
+(API·배치 서버가 떠있어야 함. 배치는 `--spring.profiles.active=local-dev`로 매분 실행.)
 
 ### 테스트
 
@@ -229,16 +245,16 @@ application-batch       # 배치 서버 진입점
 
 ## 로드맵
 
-검증된 것 ✅ — API 기동 · 이력서 업로드 → MinIO · 대시보드 · 어댑터 와이어링 · 배치 오케스트레이션 로직 · 단위 테스트.
+완료 ✅
+- [x] 배치 파이프라인 실 Anthropic 키로 end-to-end 완주 검증 (실제 PDF 이력서 + JD)
+- [x] 채용 공고 관리 (생성/목록 API + 대시보드 폼)
+- [x] 배치 견고성 — 제출/수거 분리, 논블로킹 폴링, stuck 가드, 실패 시 재시도 롤백
+- [x] 입력 검증(Bean Validation) + 전역 예외 핸들러 (`400`/`404` 일관 응답)
 
-진행 중 / 예정:
-
-- [x] 배치 파이프라인 실 Anthropic 키로 end-to-end 완주 검증
-- [ ] 채용 공고 관리 (생성 API / 화면) — 현재는 DB 직접 입력
+예정
 - [ ] 인증·인가 (이력서는 민감 PII)
-- [ ] 배치 견고성 — 폴링 타임아웃, 실패 항목 재처리
-- [ ] 입력 검증(Bean Validation) + 전역 예외 핸들러
 - [ ] 통합 테스트, 관측성(메트릭/구조화 로깅)
+- [ ] 이력서 원문 열람 / 평가 상세 화면
 
 자세한 설계 배경은 [`docs/technical-challenges.md`](docs/technical-challenges.md), 진행 기록은 [`docs/devlog.md`](docs/devlog.md).
 

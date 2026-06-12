@@ -111,8 +111,38 @@
 
 ---
 
+## 2026-06-12 — 단위 테스트 · 대시보드 · 공고 관리 · 배치 견고성 · 입력 검증
+
+### 단위 테스트 (Kotest `DescribeSpec` + MockK)
+- 포트 전부 목으로 대체한 서비스 단위 테스트 우선(통합 최소화). Tika in-process 파싱, 알림 메시지 포매팅도.
+
+### 대시보드 (Thymeleaf) + 채용 공고 관리
+- `resume/api`에 `@Controller` 대시보드 — 평가 결과 표 + 업로드 폼 + 공고 등록 폼·드롭다운. `BatchRunReaderService`(최신 배치 조회) 추가.
+- 공고 생성/목록 REST(`/api/v1/job-postings`) + `JobPostingRegistrationService`, `JobPostingRepository.save/findAll`. → DB 직접 insert 탈출.
+
+### 배치 견고성 — 제출/수거 분리 (가장 큰 리팩터)
+- **문제**: 기존 `evaluate()`가 제출 후 그 자리에서 블로킹 폴링(`while IN_PROGRESS { Thread.sleep(30s) }`). Batches는 완료 푸시(webhook)가 없고 SLA가 최대 24h → 스레드 장시간 점유 + 재시작 시 batchHandle 유실 → 배치 고아·중복 제출.
+- **해결**: `BatchEvaluationService`를 **`BatchSubmissionService`(제출) + `BatchCollectionService`(수거)** 로 분리.
+  - 제출 잡: RUNNING 있으면 skip(단일 in-flight 불변식) → 제출 → `batch_run.provider_batch_id` 영속 + 이력서 `SUBMITTED` → 즉시 리턴.
+  - 수거 잡(5분 cron): RUNNING 1회 폴링 → COMPLETED 저장·알림 / FAILED·25h stale면 `SUBMITTED→UPLOADED` 롤백 후 FAILED. 논블로킹·재시작 안전.
+- **스키마**: `batch_run.provider_batch_id` 컬럼(Liquibase addColumn), `ResumeStatus.SUBMITTED` 추가.
+- 설계 근거(푸시리스 reconciliation·폴링 비용 오해 정정·고정 cron vs 동적 예약)는 `technical-challenges.md` §2.
+
+### 입력 검증 + 전역 예외 핸들러
+- `spring-boot-starter-validation` + DTO/파라미터 제약(`@NotBlank`/`@Email`/`@Positive`). 부팅 시 validation provider 경고 해소.
+- `@RestControllerAdvice` 전역 핸들러: 도메인 `NotFoundException`→`404`, 검증 위반→`400 + fieldErrors`, 그 외→`500`(내부 메시지 비노출). 도메인은 HTTP 무지 — 번역은 경계에서.
+- 도메인 예외 공통 베이스 `NotFoundException` 신설. `-java-parameters` 컴파일 플래그로 검증 메시지에 실제 인자명 노출.
+
+### 실전 e2e 검증 + 샘플 스크립트
+- **실 PDF 이력서 + JD로 전체 파이프라인 완주** — `sample/` 기반 `scripts/sample-test-run.sh`(공고 생성→업로드→평가 대기→결과). 결과: 남재희 PASS 80, 이력서 실내용 인용 + JD 갭 지적.
+- **multipart 한도 상향**(기본 1MB → 10MB): 샘플 PDF가 1.05MB라 업로드 413 발생 → `spring.servlet.multipart` 설정.
+
+**커밋**: (기능 단위로 분할, Claude 푸터 제외)
+
+---
+
 ## 다음
 
-1. **통합 테스트** — `kotlin` 타입의 integrationTest 스위트 활용. S3는 MinIO Testcontainer로 실검증 가능. Anthropic은 mock 웹서버(okhttp MockWebServer)로 batches 흐름 검증 권장 (실 API는 키+최대 24h 소요라 CI 부적합)
-2. **배치 실행 경로 검증** — `application-batch` bootRun + `ANTHROPIC_API_KEY` 세팅 후 소량 이력서로 `evaluate()` 1회 실제 돌려보기. local-dev 프로필 cron 매분
-3. **운영 보강** — Bean Validation provider 추가(DTO 검증 활성화), Slack 웹훅 URL 등 시크릿 주입 경로 정리(env → 배포 시 secret store)
+1. **인증·인가** — 이력서=민감 PII. 방식 미정(폼+세션 / Basic / JWT). 우선순위 높음.
+2. **통합 테스트** — S3는 MinIO Testcontainer, Anthropic은 MockWebServer로 batches 흐름.
+3. **운영 보강** — 관측성(메트릭/구조화 로깅), 시크릿 스토어, 이력서 원문 열람 화면.
