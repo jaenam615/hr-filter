@@ -1,5 +1,8 @@
 # hr-filter
 
+[![Build](https://github.com/jaenam615/hr-filter/actions/workflows/build.yml/badge.svg)](https://github.com/jaenam615/hr-filter/actions/workflows/build.yml)
+[![Test](https://github.com/jaenam615/hr-filter/actions/workflows/test.yml/badge.svg)](https://github.com/jaenam615/hr-filter/actions/workflows/test.yml)
+
 AI 기반 서류 심사 필터링 시스템. 채용 공고와 지원자 이력서를 LLM으로 비교 평가해
 **통과 / 보류 / 탈락** 판정과 근거·세부 점수를 산출한다.
 
