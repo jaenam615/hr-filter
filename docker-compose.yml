@@ -47,6 +47,54 @@ services:
       echo 'bucket ready: hrfilter-resumes'
       "
 
+  api:
+    build:
+      context: .
+      args:
+        MODULE: application-api
+    container_name: hr-filter-app-api
+    depends_on:
+      postgres:
+        condition: service_healthy
+      minio-init:
+        condition: service_completed_successfully
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/hrfilter
+      SPRING_DATASOURCE_USERNAME: hrfilter
+      SPRING_DATASOURCE_PASSWORD: hrfilter
+      HRFILTER_S3_ENDPOINT: http://minio:9000
+      HRFILTER_S3_ACCESS_KEY: minioadmin
+      HRFILTER_S3_SECRET_KEY: minioadmin
+      HRFILTER_NOTIFIER_CHANNEL: ${HRFILTER_NOTIFIER_CHANNEL:-slack}
+      HRFILTER_SLACK_WEBHOOK_URL: ${HRFILTER_SLACK_WEBHOOK_URL:-}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+    ports:
+      - "8080:8080"   # 서버 + 대시보드(http://localhost:8080/dashboard)
+
+  batch:
+    build:
+      context: .
+      args:
+        MODULE: application-batch
+    container_name: hr-filter-app-batch
+    depends_on:
+      postgres:
+        condition: service_healthy
+      minio-init:
+        condition: service_completed_successfully
+    environment:
+      # local-dev: 제출·수거 매 1분 (띄워서 바로 동작 확인용). 운영처럼 8/14시·5분으로 보려면 이 줄 제거.
+      SPRING_PROFILES_ACTIVE: local-dev
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/hrfilter
+      SPRING_DATASOURCE_USERNAME: hrfilter
+      SPRING_DATASOURCE_PASSWORD: hrfilter
+      HRFILTER_S3_ENDPOINT: http://minio:9000
+      HRFILTER_S3_ACCESS_KEY: minioadmin
+      HRFILTER_S3_SECRET_KEY: minioadmin
+      HRFILTER_NOTIFIER_CHANNEL: ${HRFILTER_NOTIFIER_CHANNEL:-slack}
+      HRFILTER_SLACK_WEBHOOK_URL: ${HRFILTER_SLACK_WEBHOOK_URL:-}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+
 volumes:
   postgres-data:
   minio-data:

@@ -1,0 +1,14 @@
+# 빌드 산출물·캐시·IDE — 도커 빌드 컨텍스트에서 제외
+**/build/
+.gradle/
+.kotlin/
+.git/
+.idea/
+*.iml
+
+# 로컬 전용
+.env
+sample/
+test-images/
+docs/
+*.md

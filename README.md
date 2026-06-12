@@ -147,20 +147,26 @@ flowchart TD
 
 ## 로컬 실행
 
+먼저 시크릿 준비: `cp .env.example .env` 후 `ANTHROPIC_API_KEY` 등을 채운다.
+
+### A. 전부 Docker로 (가장 간단)
+
 ```bash
-# 0. 시크릿/환경 변수 준비
-cp .env.example .env              # 값 채우기 (ANTHROPIC_API_KEY 등)
-set -a && source .env && set +a   # 현재 셸에 로드
-
-# 1. 인프라 (Postgres + MinIO + 버킷 초기화)
-docker compose up -d
-
-# 2. API 서버 — 대시보드 + REST + Swagger
-./gradlew :application-api:bootRun
+docker compose up -d --build
 #   대시보드  http://localhost:8080/dashboard
 #   Swagger   http://localhost:8080/swagger-ui/index.html
+```
 
-# 3. 배치 서버 — 스케줄러 (local-dev 프로필: 매 1분)
+`api`(서버+대시보드) · `batch`(스케줄러) · `postgres` · `minio`가 한 번에 뜬다. 컨테이너 간에는
+서비스명(`postgres`/`minio`)으로 접속하며, `.env`의 값이 자동 주입된다. 배치는 `local-dev` 프로필로
+매 1분 제출·수거(compose에서 끄려면 `batch`의 `SPRING_PROFILES_ACTIVE` 제거 → 08·14시·5분).
+
+### B. 인프라만 Docker + 앱은 Gradle (개발·디버깅)
+
+```bash
+set -a && source .env && set +a
+docker compose up -d postgres minio minio-init   # 인프라만
+./gradlew :application-api:bootRun                 # 서버 + 대시보드 + Swagger
 ./gradlew :application-batch:bootRun --args='--spring.profiles.active=local-dev'
 ```
 
