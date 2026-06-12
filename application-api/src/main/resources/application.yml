@@ -7,6 +7,10 @@ spring:
     password: ${SPRING_DATASOURCE_PASSWORD:hrfilter}
   liquibase:
     change-log: classpath:/db/changelog/db.changelog-master.yaml
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
 
 hrfilter:
   notifier:

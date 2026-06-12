@@ -45,3 +45,6 @@ bin/
 .DS_Store
 ### Secrets / local env ###
 .env
+
+### 샘플 이력서(실제 PII) — 커밋 금지, JD/스크립트만 추적
+sample/resume/
