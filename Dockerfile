@@ -8,7 +8,7 @@ WORKDIR /app
 COPY . .
 ARG MODULE
 # --mount=cache: gradle 의존성을 빌드 간/이미지 간 공유 (BuildKit)
-RUN --mount=type=cache,target=/root/.gradle \
+RUN --mount=type=cache,id=gradle-cache,target=/root/.gradle \
     ./gradlew --no-daemon -x test ":${MODULE}:bootJar" \
  && cp "$(ls ${MODULE}/build/libs/*.jar | grep -v -- '-plain.jar')" /app/app.jar
 
